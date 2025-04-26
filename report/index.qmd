@@ -1,13 +1,31 @@
 ---
-title: Neuromappr
-subtitle: Brain-Computer Interface Movement Decoding
+title: "Neuromappr"
+subtitle: "Brain-Computer Interface Movement Decoding"
 authors:
-  - name: Wanghley Soares Martins
-    affiliation: Duke University
-    roles: writing
+  - name: "Wanghley Soares Martins"
+    affiliation: "Duke University"
+    roles: ["writing"]
     corresponding: true
 bibliography: references.bib
+csl: ieee.csl  # Optional: change to your citation style (apa.csl, ieee.csl, etc.)
+date: "`r Sys.Date()`"
+format: pdf  # or html / docx
 ---
 
-## Section
-This is a simple placeholder for the manuscript's main document [@knuth84].
+# Introduction
+
+This document presents a brief overview of the **Neuromappr** project, which aims to decode movement intent from EEG signals using support vector machines in a Brain-Computer Interface (BCI) framework. For example, see [@GramfortEtAl2013a].
+
+# Methods
+
+_Section under construction._
+
+# Results
+
+_Section under construction._
+
+# Conclusion
+
+_Section under construction._
+
+# References
