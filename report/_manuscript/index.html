@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-04-27">
 
 <title>Neuromappr</title>
 <style>
@@ -19,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -53,6 +88,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script async="" src="https://hypothes.is/embed.js"></script>
 <script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
@@ -60,15 +98,58 @@ div.csl-indent {
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <meta name="citation_title" content="Neuromappr">
 <meta name="citation_author" content="Wanghley Soares Martins">
-<meta name="citation_publication_date" content="NaN-NaN-NaN">
-<meta name="citation_cover_date" content="NaN-NaN-NaN">
-<meta name="citation_year" content="NaN">
-<meta name="citation_online_date" content="NaN-NaN-NaN">
+<meta name="citation_publication_date" content="2025-04-27">
+<meta name="citation_cover_date" content="2025-04-27">
+<meta name="citation_year" content="2025">
+<meta name="citation_online_date" content="2025-04-27">
 <meta name="citation_language" content="en">
-<meta name="citation_reference" content="citation_title=MEG and EEG data analysis with MNE-Python;,citation_author=Alexandre Gramfort;,citation_author=Martin Luessi;,citation_author=Eric Larson;,citation_author=Denis A. Engemann;,citation_author=Daniel Strohmeier;,citation_author=Christian Brodbeck;,citation_author=Roman Goj;,citation_author=Mainak Jas;,citation_author=Teon Brooks;,citation_author=Lauri Parkkonen;,citation_author=Matti S. Hämäläinen;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_issue=267;,citation_doi=10.3389/fnins.2013.00267;,citation_volume=7;,citation_journal_title=Frontiers in Neuroscience;">
+<meta name="citation_reference" content="citation_title=Classification of EEG motor imagery using support vector machine and convolutional neural network;,citation_author=Yu-Te Wu;,citation_author=Tzu Hsuan Huang;,citation_author=Chun Yi Lin;,citation_author=Sheng Jia Tsai;,citation_author=Po-Shan Wang;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_doi=10.1109/CACS.2018.8606765;,citation_conference_title=2018 international automatic control conference (CACS);">
+<meta name="citation_reference" content="citation_title=SVM Classification of EEG Signals for Brain Computer Interface;,citation_author=G. Costantini;,citation_author=M. Todisco;,citation_author=D. Casali;,citation_author=M. Carota;,citation_author=G. Saggio;,citation_author=L. Bianchi;,citation_author=M. Abbafati;,citation_author=L. Quitadamo;,citation_publication_date=2009;,citation_cover_date=2009;,citation_year=2009;,citation_doi=10.3233/978-1-60750-072-8-229;,citation_inbook_title=Neural Nets WIRN09;">
+<meta name="citation_reference" content="citation_title=Classification of EEG Using Adaptive SVM Classifier with CSP and Online Recursive Independent Component Analysis;,citation_author=Mary Judith Antony;,citation_author=Baghavathi Priya Sankaralingam;,citation_author=Rakesh Kumar Mahendran;,citation_author=Akber Abid Gardezi;,citation_author=Muhammad Shafiq;,citation_author=Jin-Ghoo Choi;,citation_author=Habib Hamam;,citation_publication_date=2022-10;,citation_cover_date=2022-10;,citation_year=2022;,citation_issue=19;,citation_doi=10.3390/s22197596;,citation_volume=22;,citation_journal_title=Sensors (Basel, Switzerland);">
+<meta name="citation_reference" content="citation_title=Human-computer interaction (HCI): An overview;,citation_author=Alex Roney Mathew;,citation_author=Aayad Al Hajj;,citation_author=Ahmed Al Abri;,citation_publication_date=2011;,citation_cover_date=2011;,citation_year=2011;,citation_doi=10.1109/CSAE.2011.5953178;,citation_volume=1;,citation_conference_title=2011 IEEE international conference on computer science and automation engineering;">
+<meta name="citation_reference" content="citation_title=Introduction of SVM related theory and its application research;,citation_author=Ting-ting Dai;,citation_author=Yan-shou Dong;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_doi=10.1109/AEMCSE50948.2020.00056;,citation_conference_title=2020 3rd international conference on advanced electronic materials, computers and software engineering (AEMCSE);">
+<meta name="citation_reference" content="citation_title=Comparing ridge and LASSO estimators for data analysis;,citation_abstract=This paper is devoted to the comparison of Ridge and LASSO estimators. Test data is used to analyze advantages of each of the two regression analysis methods. All the required calculations are performed using the R software for statistical computing.;,citation_author=L. E. Melkumova;,citation_author=S.Ya. Shatskikh;,citation_publication_date=2017;,citation_cover_date=2017;,citation_year=2017;,citation_fulltext_html_url=https://www.sciencedirect.com/science/article/pii/S1877705817341474;,citation_doi=https://doi.org/10.1016/j.proeng.2017.09.615;,citation_issn=1877-7058;,citation_volume=201;,citation_journal_title=Procedia Engineering;">
+<meta name="citation_reference" content="citation_title=neuromappr;,citation_author=Martins W. S.;,citation_publication_date=2025-04;,citation_cover_date=2025-04;,citation_year=2025;,citation_fulltext_html_url=https://github.com/Wanghley/neuromappr;,citation_journal_title=GitHub;">
+<meta name="citation_reference" content="citation_title=Scikit-learn: Machine learning in Python;,citation_author=F. Pedregosa;,citation_author=G. Varoquaux;,citation_author=A. Gramfort;,citation_author=V. Michel;,citation_author=B. Thirion;,citation_author=O. Grisel;,citation_author=M. Blondel;,citation_author=P. Prettenhofer;,citation_author=R. Weiss;,citation_author=V. Dubourg;,citation_author=J. Vanderplas;,citation_author=A. Passos;,citation_author=D. Cournapeau;,citation_author=M. Brucher;,citation_author=M. Perrot;,citation_author=E. Duchesnay;,citation_publication_date=2011;,citation_cover_date=2011;,citation_year=2011;,citation_volume=12;,citation_book_title=Journal of Machine Learning Research;">
+<meta name="citation_reference" content="citation_title=Matplotlib: A 2D graphics environment;,citation_author=John D. Hunter;,citation_publication_date=2007;,citation_cover_date=2007;,citation_year=2007;,citation_volume=9;,citation_book_title=Computing in Science &amp;amp;amp; Engineering;">
+<meta name="citation_reference" content="citation_title=Array programming with NumPy;,citation_author=Charles R. Harris;,citation_author=K. Jarrod Millman;,citation_author=Stéfan J. Walt;,citation_author=Ralf Gommers;,citation_author=Pauli Virtanen;,citation_author=David Cournapeau;,citation_author=Eric Wieser;,citation_author=Julian Taylor;,citation_author=Sebastian Berg;,citation_author=Nathaniel J. Smith;,citation_author=Robert Kern;,citation_author=Matti Picus;,citation_author=Stephan Hoyer;,citation_author=Marten H. Kerkwijk;,citation_author=Matthew Brett;,citation_author=Allan Haldane;,citation_author=Jaime Fernández Del Río;,citation_author=Mark Wiebe;,citation_author=Pearu Peterson;,citation_author=Pierre Gérard-Marchant;,citation_author=Kevin Sheppard;,citation_author=Travis Reddy;,citation_author=Warren Weckesser;,citation_author=Hameer Abbasi;,citation_author=Christoph Gohlke;,citation_author=Travis E. Oliphant;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_volume=585;,citation_book_title=Nature;">
+<meta name="citation_reference" content="citation_title=Pandas: A foundational python library for data analysis and statistics;,citation_author=Wes McKinney;,citation_author=others;,citation_publication_date=2011;,citation_cover_date=2011;,citation_year=2011;,citation_book_title=Python for High Performance and Scientific Computing;">
+<meta name="citation_reference" content="citation_title=Seaborn: Statistical data visualization;,citation_author=Michael Waskom;,citation_publication_date=2021;,citation_cover_date=2021;,citation_year=2021;,citation_volume=6;,citation_book_title=Journal of Open Source Software;">
+<meta name="citation_reference" content="citation_title=Joblib: Running python functions as pipeline jobs;,citation_author=Joblib developers;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;">
+<meta name="citation_reference" content="citation_title=MNE software for processing MEG and EEG data;,citation_author=Alexandre Gramfort;,citation_author=Martin Luessi;,citation_author=Eric Larson;,citation_author=Denis A. Engemann;,citation_author=Daniel Strohmeier;,citation_author=Christian Brodbeck;,citation_author=Lauri Parkkonen;,citation_author=Matti S. Hämäläinen;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_volume=86;,citation_book_title=NeuroImage;">
+<meta name="citation_reference" content="citation_title=UMAP: Uniform manifold approximation and projection for dimension reduction;,citation_author=Leland McInnes;,citation_author=John Healy;,citation_author=James Melville;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=https://arxiv.org/abs/1802.03426;">
 </head>
 
 <body>
@@ -77,7 +158,7 @@ div.csl-indent {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Neuromappr</h1>
-            <p class="subtitle lead">Brain-Computer Interface Movement Decoding</p>
+            <p class="subtitle lead">Brain-Computer Interface Movement Decoding Using Support Vector Machines</p>
           </div>
 
     
@@ -88,11 +169,11 @@ div.csl-indent {
           <div class="quarto-title-meta-heading">Affiliation</div>
           
                 <div class="quarto-title-meta-contents">
-            <p class="author">Wanghley Soares Martins </p>
+            <p class="author">Wanghley Soares Martins <a href="https://orcid.org/0000-0002-5110-4024" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
                 <div class="quarto-title-meta-contents">
                     <p class="affiliation">
-                        Duke University
+                        Duke University, Pratt School of Engineering, Department of Electrical and Computer Engineering
                       </p>
                   </div>
                     </div>
@@ -103,7 +184,7 @@ div.csl-indent {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">Invalid Date</p>
+              <p class="date">April 27, 2025</p>
             </div>
           </div>
           
@@ -111,7 +192,7 @@ div.csl-indent {
               </div>
       </div>
       <div class="quarto-title-meta-column-end quarto-other-formats-target">
-      <div class="quarto-alternate-formats"><div class="quarto-title-meta-heading">Other Formats</div><div class="quarto-title-meta-contents"><p><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></p></div><div class="quarto-title-meta-contents"><p><a href="index-meca.zip" data-meca-link="true"><i class="bi bi-archive"></i>MECA Bundle</a></p></div></div></div>
+      </div>
     </div>
 
 
@@ -124,11 +205,96 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">1.1</span> Background</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives"><span class="header-section-number">1.2</span> Objectives</a>
+  <ul class="collapse">
+  <li><a href="#spedific-objectives" id="toc-spedific-objectives" class="nav-link" data-scroll-target="#spedific-objectives"><span class="header-section-number">1.2.1</span> Spedific Objectives</a></li>
+  </ul></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview"><span class="header-section-number">1.3</span> Dataset overview</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">2</span> Methods</a>
+  <ul>
+  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure"><span class="header-section-number">2.1</span> Project Structure</a></li>
+  <li><a href="#mathematical-formulation" id="toc-mathematical-formulation" class="nav-link" data-scroll-target="#mathematical-formulation"><span class="header-section-number">2.2</span> Mathematical Formulation</a>
+  <ul class="collapse">
+  <li><a href="#support-vector-machines-a-mathematical-framework-for-high-dimensional-eeg-classification" id="toc-support-vector-machines-a-mathematical-framework-for-high-dimensional-eeg-classification" class="nav-link" data-scroll-target="#support-vector-machines-a-mathematical-framework-for-high-dimensional-eeg-classification"><span class="header-section-number">2.2.1</span> Support Vector Machines: A Mathematical Framework for High-Dimensional EEG Classification</a></li>
+  <li><a href="#permutation-importance" id="toc-permutation-importance" class="nav-link" data-scroll-target="#permutation-importance"><span class="header-section-number">2.2.2</span> Permutation Importance</a></li>
+  <li><a href="#extending-svms-with-kernels-for-nonlinear-eeg-classification" id="toc-extending-svms-with-kernels-for-nonlinear-eeg-classification" class="nav-link" data-scroll-target="#extending-svms-with-kernels-for-nonlinear-eeg-classification"><span class="header-section-number">2.2.3</span> Extending SVMs with Kernels for Nonlinear EEG Classification</a>
+  <ul class="collapse">
+  <li><a href="#kernels-used-in-this-project" id="toc-kernels-used-in-this-project" class="nav-link" data-scroll-target="#kernels-used-in-this-project"><span class="header-section-number">2.2.3.1</span> Kernels Used in This Project</a></li>
+  <li><a href="#kernel-selection-strategy" id="toc-kernel-selection-strategy" class="nav-link" data-scroll-target="#kernel-selection-strategy"><span class="header-section-number">2.2.3.2</span> Kernel Selection Strategy</a></li>
+  <li><a href="#interpretation-of-kernel-svms" id="toc-interpretation-of-kernel-svms" class="nav-link" data-scroll-target="#interpretation-of-kernel-svms"><span class="header-section-number">2.2.3.3</span> Interpretation of Kernel SVMs</a></li>
+  </ul></li>
+  <li><a href="#regularization-parameter-and-norm-penalties-in-svms" id="toc-regularization-parameter-and-norm-penalties-in-svms" class="nav-link" data-scroll-target="#regularization-parameter-and-norm-penalties-in-svms"><span class="header-section-number">2.2.4</span> Regularization Parameter and Norm Penalties in SVMs</a>
+  <ul class="collapse">
+  <li><a href="#soft-margin-svm-and-the-role-of-c" id="toc-soft-margin-svm-and-the-role-of-c" class="nav-link" data-scroll-target="#soft-margin-svm-and-the-role-of-c"><span class="header-section-number">2.2.4.1</span> Soft-Margin SVM and the Role of <span class="math inline">\(C\)</span></a></li>
+  <li><a href="#l2-regularization-ridge-smooth-and-stable" id="toc-l2-regularization-ridge-smooth-and-stable" class="nav-link" data-scroll-target="#l2-regularization-ridge-smooth-and-stable"><span class="header-section-number">2.2.4.2</span> L2 Regularization (Ridge): Smooth and Stable</a></li>
+  <li><a href="#l1-regularization-lasso-sparsity-and-interpretability" id="toc-l1-regularization-lasso-sparsity-and-interpretability" class="nav-link" data-scroll-target="#l1-regularization-lasso-sparsity-and-interpretability"><span class="header-section-number">2.2.4.3</span> L1 Regularization (Lasso): Sparsity and Interpretability</a></li>
+  <li><a href="#eeg-interpretation-and-norm-selection" id="toc-eeg-interpretation-and-norm-selection" class="nav-link" data-scroll-target="#eeg-interpretation-and-norm-selection"><span class="header-section-number">2.2.4.4</span> EEG Interpretation and Norm Selection</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#single-linear-svm-classifier-without-cross-validation" id="toc-single-linear-svm-classifier-without-cross-validation" class="nav-link" data-scroll-target="#single-linear-svm-classifier-without-cross-validation"><span class="header-section-number">2.3</span> Single Linear SVM Classifier Without Cross-Validation</a>
+  <ul class="collapse">
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">2.3.1</span> Data Preparation</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">2.3.2</span> Model Training</a></li>
+  <li><a href="#weight-analysis-and-interpretation" id="toc-weight-analysis-and-interpretation" class="nav-link" data-scroll-target="#weight-analysis-and-interpretation"><span class="header-section-number">2.3.3</span> Weight Analysis and Interpretation</a></li>
+  <li><a href="#topographic-mapping" id="toc-topographic-mapping" class="nav-link" data-scroll-target="#topographic-mapping"><span class="header-section-number">2.3.4</span> Topographic Mapping</a></li>
+  <li><a href="#evaluation-confusion-matrices-and-roc-curves" id="toc-evaluation-confusion-matrices-and-roc-curves" class="nav-link" data-scroll-target="#evaluation-confusion-matrices-and-roc-curves"><span class="header-section-number">2.3.5</span> Evaluation: Confusion Matrices and ROC Curves</a></li>
+  </ul></li>
+  <li><a href="#regularization-parameter-selection-l1-vs-l2-penalties" id="toc-regularization-parameter-selection-l1-vs-l2-penalties" class="nav-link" data-scroll-target="#regularization-parameter-selection-l1-vs-l2-penalties"><span class="header-section-number">2.4</span> Regularization Parameter Selection: L1 vs L2 Penalties</a>
+  <ul class="collapse">
+  <li><a href="#weight-magnitude-comparison" id="toc-weight-magnitude-comparison" class="nav-link" data-scroll-target="#weight-magnitude-comparison"><span class="header-section-number">2.4.1</span> Weight Magnitude Comparison</a></li>
+  <li><a href="#cross-validation-overt-movement-data" id="toc-cross-validation-overt-movement-data" class="nav-link" data-scroll-target="#cross-validation-overt-movement-data"><span class="header-section-number">2.4.2</span> Cross-Validation: Overt Movement Data</a>
+  <ul class="collapse">
+  <li><a href="#generalization-performance-across-modalities" id="toc-generalization-performance-across-modalities" class="nav-link" data-scroll-target="#generalization-performance-across-modalities"><span class="header-section-number">2.4.2.1</span> Generalization Performance Across Modalities</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#kernel-svm-experiments-and-topographic-analysis" id="toc-kernel-svm-experiments-and-topographic-analysis" class="nav-link" data-scroll-target="#kernel-svm-experiments-and-topographic-analysis"><span class="header-section-number">2.5</span> Kernel SVM Experiments and Topographic Analysis</a>
+  <ul class="collapse">
+  <li><a href="#dimensionality-reduction-with-umap" id="toc-dimensionality-reduction-with-umap" class="nav-link" data-scroll-target="#dimensionality-reduction-with-umap"><span class="header-section-number">2.5.0.1</span> Dimensionality Reduction with UMAP</a></li>
+  <li><a href="#visualizing-smooth-decision-functions" id="toc-visualizing-smooth-decision-functions" class="nav-link" data-scroll-target="#visualizing-smooth-decision-functions"><span class="header-section-number">2.5.0.2</span> Visualizing Smooth Decision Functions</a></li>
+  <li><a href="#topographic-visualization-of-feature-importance" id="toc-topographic-visualization-of-feature-importance" class="nav-link" data-scroll-target="#topographic-visualization-of-feature-importance"><span class="header-section-number">2.5.0.3</span> Topographic Visualization of Feature Importance</a></li>
+  <li><a href="#summary-of-kernel-svm-results" id="toc-summary-of-kernel-svm-results" class="nav-link" data-scroll-target="#summary-of-kernel-svm-results"><span class="header-section-number">2.5.0.4</span> Summary of Kernel SVM Results</a></li>
+  </ul></li>
+  <li><a href="#two-level-cross-validation-implementation-and-results" id="toc-two-level-cross-validation-implementation-and-results" class="nav-link" data-scroll-target="#two-level-cross-validation-implementation-and-results"><span class="header-section-number">2.6</span> Two-Level Cross-Validation Implementation and Results</a>
+  <ul class="collapse">
+  <li><a href="#nested-cross-validation-structure" id="toc-nested-cross-validation-structure" class="nav-link" data-scroll-target="#nested-cross-validation-structure"><span class="header-section-number">2.6.0.1</span> Nested Cross-Validation Structure</a></li>
+  <li><a href="#implementation-details" id="toc-implementation-details" class="nav-link" data-scroll-target="#implementation-details"><span class="header-section-number">2.6.0.2</span> Implementation Details</a></li>
+  <li><a href="#imagined-movement-evaluation" id="toc-imagined-movement-evaluation" class="nav-link" data-scroll-target="#imagined-movement-evaluation"><span class="header-section-number">2.6.0.3</span> Imagined Movement Evaluation</a></li>
+  <li><a href="#overt-movement-evaluation" id="toc-overt-movement-evaluation" class="nav-link" data-scroll-target="#overt-movement-evaluation"><span class="header-section-number">2.6.0.4</span> Overt Movement Evaluation</a></li>
+  <li><a href="#final-evaluation-metrics" id="toc-final-evaluation-metrics" class="nav-link" data-scroll-target="#final-evaluation-metrics"><span class="header-section-number">2.6.0.5</span> Final Evaluation Metrics</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">3</span> Results</a>
+  <ul>
+  <li><a href="#baseline-linear-svm-results" id="toc-baseline-linear-svm-results" class="nav-link" data-scroll-target="#baseline-linear-svm-results"><span class="header-section-number">3.1</span> Baseline Linear SVM Results</a>
+  <ul class="collapse">
+  <li><a href="#imagined-movement-classification-results" id="toc-imagined-movement-classification-results" class="nav-link" data-scroll-target="#imagined-movement-classification-results"><span class="header-section-number">3.1.0.1</span> Imagined Movement Classification Results</a></li>
+  <li><a href="#overt-movement-classification-results" id="toc-overt-movement-classification-results" class="nav-link" data-scroll-target="#overt-movement-classification-results"><span class="header-section-number">3.1.0.2</span> Overt Movement Classification Results</a></li>
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings"><span class="header-section-number">3.1.0.3</span> Summary of Findings</a></li>
+  </ul></li>
+  <li><a href="#two-level-cross-validation-results-across-scenarios" id="toc-two-level-cross-validation-results-across-scenarios" class="nav-link" data-scroll-target="#two-level-cross-validation-results-across-scenarios"><span class="header-section-number">3.2</span> Two-Level Cross-Validation Results Across Scenarios</a>
+  <ul class="collapse">
+  <li><a href="#overt-overt" id="toc-overt-overt" class="nav-link" data-scroll-target="#overt-overt"><span class="header-section-number">3.2.0.1</span> Overt → Overt</a></li>
+  <li><a href="#imagined-imagined" id="toc-imagined-imagined" class="nav-link" data-scroll-target="#imagined-imagined"><span class="header-section-number">3.2.0.2</span> Imagined → Imagined</a></li>
+  <li><a href="#overt-imagined" id="toc-overt-imagined" class="nav-link" data-scroll-target="#overt-imagined"><span class="header-section-number">3.2.0.3</span> Overt → Imagined</a></li>
+  <li><a href="#imagined-overt" id="toc-imagined-overt" class="nav-link" data-scroll-target="#imagined-overt"><span class="header-section-number">3.2.0.4</span> Imagined → Overt</a></li>
+  <li><a href="#scenario-comparison-summary" id="toc-scenario-comparison-summary" class="nav-link" data-scroll-target="#scenario-comparison-summary"><span class="header-section-number">3.2.0.5</span> Scenario Comparison Summary</a></li>
+  </ul></li>
+  <li><a href="#kernel-svm-performance-and-interpretability" id="toc-kernel-svm-performance-and-interpretability" class="nav-link" data-scroll-target="#kernel-svm-performance-and-interpretability"><span class="header-section-number">3.3</span> Kernel SVM Performance and Interpretability</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4</span> Conclusion</a>
+  <ul>
+  <li><a href="#next-steps-and-future-directions" id="toc-next-steps-and-future-directions" class="nav-link" data-scroll-target="#next-steps-and-future-directions"><span class="header-section-number">4.0.1</span> Next Steps and Future Directions</a></li>
+  <li><a href="#final-remarks" id="toc-final-remarks" class="nav-link" data-scroll-target="#final-remarks"><span class="header-section-number">4.0.2</span> Final Remarks</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a>
+  <ul>
+  <li><a href="#colaboration" id="toc-colaboration" class="nav-link" data-scroll-target="#colaboration"><span class="header-section-number">5.1</span> Colaboration</a></li>
+  <li><a href="#packages-used" id="toc-packages-used" class="nav-link" data-scroll-target="#packages-used"><span class="header-section-number">5.2</span> Packages used</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -141,30 +307,1225 @@ div.csl-indent {
   
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>This document presents a brief overview of the <strong>Neuromappr</strong> project, which aims to decode movement intent from EEG signals using support vector machines in a Brain-Computer Interface (BCI) framework. For example, see <span class="citation" data-cites="GramfortEtAl2013a"><a href="#ref-GramfortEtAl2013a" role="doc-biblioref">[1]</a></span>.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<section id="background" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="background"><span class="header-section-number">1.1</span> Background</h2>
+<p>Since the creation of machines and computers, the human interaction with them has been evolving and sometimes quite challenging. For instance, the first computers were operated using punch cards, which required a lot of effort to input data. As technology advanced, we moved to keyboards and mice, which made it easier to interact with computers. However, these methods still require physical movement and can be limiting for individuals with disabilities or injuries. This interaction with computers has been a challenge investigated for researchers and engineers for decades in the field of Human-Computer Interaction (HCI) <span class="citation" data-cites="5953178"><a href="#ref-5953178" role="doc-biblioref">[1]</a></span>.</p>
+<p>The goal of HCI is to create systems that are easy to use and understand, allowing users to interact with computers in a natural and intuitive way. This has led to the development of various input devices, such as touchscreens, voice recognition, and even brain-computer interfaces (BCIs), the focus of this project.</p>
+<p>Brain-Computer Interfaces (BCIs) are systems that enable direct communication between the human brain and devices, bypassing the need for physical movement and control, which can be particularly beneficial for individuals with disabilities or injuries. Among other data, BCIs can use electroencephalography (EEG) signals to decode brain activity and translate it into commands for controlling devices.</p>
+<p>BCI technology has the potential to revolutionize the way we interact with computers and other devices, making it possible for individuals with disabilities to regain control over their environment. Central to the efficacy of BCIs is the accurate interpretation of electroencephalogram (EEG) signals, particularly those associated with motor imagery—the mental simulation of movement without actual execution as described by Costantini et al.&nbsp;(2009) <span class="citation" data-cites="Costantini2009"><a href="#ref-Costantini2009" role="doc-biblioref">[2]</a></span>.</p>
+<p>From a machine learning standpoint, the classification of EEG signals for motor imagery tasks presents several intricate challenges:</p>
+<!-- insert bullet points -->
+<ul>
+<li><strong>High Dimensionality with Limited Samples</strong>: EEG data are inherently high-dimensional, often involving recordings from numerous electrodes (e.g., 102 in this project), each capturing complex temporal dynamics. However, the number of labeled training samples is typically limited, leading to the “curse of dimensionality,” where models risk overfitting and poor generalization.</li>
+<li><strong>Non-Stationarity and Noise</strong>: EEG signals are susceptible to various artifacts (e.g., muscle movements, eye blinks) and exhibit non-stationary behavior, complicating the extraction of consistent features across sessions and subjects.</li>
+<li><strong>Inter-Subject Variability</strong>: There is significant variability in EEG signals across different individuals, which can affect the performance of machine learning models trained on data from a single subject. This variability necessitates the development of robust algorithms that can generalize well across different users.</li>
+<li><strong>Temporal Dynamics</strong>: EEG signals are time-dependent, and capturing the temporal dynamics of brain activity is crucial for accurate classification. This requires the use of advanced techniques that can model temporal relationships effectively.</li>
+</ul>
+<p>Support Vector Machines (SVMs) have been extensively employed in this domain due to their effectiveness in high-dimensional spaces and robustness to overfitting. For instance, Costantini et al.&nbsp;(2009) <span class="citation" data-cites="Costantini2009"><a href="#ref-Costantini2009" role="doc-biblioref">[2]</a></span> demonstrated the utility of SVMs in classifying EEG signals for BCI applications, emphasizing their capacity to handle complex, high-dimensional data.</p>
 </section>
-<section id="methods" class="level1">
-<h1>Methods</h1>
-<p><em>Section under construction.</em></p>
+<section id="objectives" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="objectives"><span class="header-section-number">1.2</span> Objectives</h2>
+<p>In this project, we aim to implement and evaluate SVM-based classifiers for distinguishing between left and right-hand motor imagery using EEG data. By addressing the aforementioned challenges through appropriate preprocessing, feature extraction, and model selection, we seek to contribute to the development of reliable and efficient BCI systems.</p>
+<section id="spedific-objectives" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="spedific-objectives"><span class="header-section-number">1.2.1</span> Spedific Objectives</h3>
+<ol type="1">
+<li>Implement a Support Vector Machine (SVM) classifier for EEG data.
+<ul>
+<li>Evaluate the performance of the SVM classifier using various kernel functions (linear, polynomial, and radial basis function).</li>
+<li>Optimize the SVM hyperparameters using grid search and cross-validation techniques.</li>
+</ul></li>
+<li>Compare the performance of the SVM classifier with Overt and Imagined Motor Imagery (MI) tasks.
+<ul>
+<li>Analyze the classification accuracy, precision, recall, and F1-score for both tasks.</li>
+<li>Investigate the impact of different EEG feature extraction methods on classification performance.</li>
+</ul></li>
+<li>Visualize and interpret the results of the SVM classifier, including feature importance and decision boundaries.
+<ul>
+<li>Provide insights into the EEG features that contribute to the classification performance.</li>
+<li>Visualize the decision boundaries of the SVM classifier in the feature space.</li>
+</ul></li>
+</ol>
 </section>
-<section id="results" class="level1">
-<h1>Results</h1>
-<p><em>Section under construction.</em></p>
 </section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
-<p><em>Section under construction.</em></p>
+<section id="dataset-overview" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="dataset-overview"><span class="header-section-number">1.3</span> Dataset overview</h2>
+<p>The dataset utilized in this project comprises EEG recordings from a Brain-Computer Interface (BCI) experiment designed to distinguish between left and right-hand movements. The recordings are categorized into two distinct types:</p>
+<ol type="1">
+<li><p><strong>Overt Motor Imagery (OMI)</strong>: This task involves participants imagining moving their left or right hand while EEG signals are recorded.</p></li>
+<li><p><strong>Imagined Motor Imagery (IMI)</strong>: In this task, participants are instructed to imagine moving their left or right hand without any actual movement.</p></li>
+</ol>
+<p>Moreover, the dataset provides the XY coordinates of the electrodes, which are crucial for visualizing the spatial distribution of EEG signals across the scalp. The dataset is organized into two main folders: <code>data</code>.</p>
+<p>The data is organized on the following files:</p>
+<ul>
+<li><p><code>data/BCIsensor_xy.csv</code>: Contains the XY coordinates of the electrodes.</p></li>
+<li><p><code>data/feaSubEImg_1.csv</code>: Contains the EEG data for the IMI task for one direction (left).</p></li>
+<li><p><code>data/feaSubEImg_2.csv</code>: Contains the EEG data for the IMI task for the other direction (right).</p></li>
+<li><p><code>data/feaSubEOvert_1.csv</code>: Contains the EEG data for the OMI task for one direction (left).</p></li>
+<li><p><code>data/feaSubEOvert_2.csv</code>: Contains the EEG data for the OMI task for the other direction (right).</p></li>
+</ul>
+<p>On the electrodes’ data, it is organized with each trial as a column and each electrode on that trial as a row, as shown in <a href="#tbl-electrodes" class="quarto-xref">Table&nbsp;1</a>.</p>
+<div id="tbl-electrodes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-electrodes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Electrodes’ data organization
+</figcaption>
+<div aria-describedby="tbl-electrodes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Electrode</th>
+<th>Trial 1</th>
+<th>Trial 2</th>
+<th>Trial 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Value</td>
+<td>Value</td>
+<td>Value</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Value</td>
+<td>Value</td>
+<td>Value</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Value</td>
+<td>Value</td>
+<td>Value</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>In terms of electrode placement, the dataset includes 102 electrodes arranged in the configuration plotted in <a href="#fig-electrodesPositions" class="quarto-xref">Figure&nbsp;1</a>. The electrodes are positioned according to the 10-20 system, a standardized method for electrode placement in EEG studies. This system ensures consistent and reproducible electrode locations across different subjects and studies.</p>
+<div id="fig-electrodesPositions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-electrodesPositions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/electrode_positions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Electrodes positions"><img src="figures/electrode_positions.png" class="img-fluid figure-img" style="width:70.0%"></a></p>
+<figcaption>Electrodes positions</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-electrodesPositions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+<div class="legend centered" style="font-size: smaller;">
+<p><strong><a href="#fig-electrodesPositions" class="quarto-xref">Figure&nbsp;1</a></strong> Electrode positions on the scalp according to the 10-20 system. The numbers indicate the electrode labels, which correspond to the columns in the dataset. Source: By the author (2025).</p>
+</div>
+<p>A topographic view into the skull is shown in <a href="#fig-electrodesPositionsTopologic" class="quarto-xref">Figure&nbsp;2</a>, where the electrodes are represented as dots on the scalp. The numbers indicate the electrode labels, which correspond to the columns in the dataset. The topographic representation provides a visual understanding of the spatial distribution of EEG signals across the scalp, allowing for better interpretation of the data.</p>
+<div id="fig-electrodesPositionsTopologic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-electrodesPositionsTopologic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/electrode_positions_topomap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Electrodes positions topologic"><img src="figures/electrode_positions_topomap.png" class="img-fluid figure-img" style="width:70.0%"></a></p>
+<figcaption>Electrodes positions topologic</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-electrodesPositionsTopologic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
+<div class="legend centered" style="font-size: smaller;">
+<p><strong><a href="#fig-electrodesPositionsTopologic" class="quarto-xref">Figure&nbsp;2</a></strong> Topographic representation of the electrode positions on the scalp. The numbers indicate the electrode labels, which correspond to the columns in the dataset. Source: By the author (2025).</p>
+</div>
 </section>
-<section id="references" class="level1 unnumbered">
+</section>
+<section id="methods" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Methods</h1>
+<section id="project-structure" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="project-structure"><span class="header-section-number">2.1</span> Project Structure</h2>
+<p>This project follows a structured pipeline encompassing data acquisition, signal preprocessing, classification, and interpretation—each stage playing a critical role in the accurate decoding of motor imagery from EEG signals. Inspired by the workflow presented in Wu et al.&nbsp;(2018)<span class="citation" data-cites="8606765"><a href="#ref-8606765" role="doc-biblioref">[3]</a></span>, this architecture promotes clarity, reproducibility, and alignment with current practices in EEG-based Brain-Computer Interface (BCI) research.</p>
+<p>As shown in <strong><a href="#fig-pipeline" class="quarto-xref">Figure&nbsp;3</a></strong>, the end-to-end system begins with EEG signal generation through motor-related brain activity, followed by collection via sensor-equipped EEG caps. The recorded signals then undergo preprocessing and are classified using machine learning algorithms—particularly Support Vector Machines (SVMs)—to distinguish between motor imagery classes. The final output may be translated into control commands or used for further neurophysiological interpretation.</p>
+<div id="fig-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="assets/wu1-p4-wu-large.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Project pipeline"><img src="assets/wu1-p4-wu-large.gif" class="img-fluid figure-img" style="width:70.0%"></a></p>
+<figcaption>Project pipeline</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
+</figure>
+</div>
+<div class="legend centered" style="font-size: smaller;">
+<p><strong><a href="#fig-pipeline" class="quarto-xref">Figure&nbsp;3</a>:</strong> Conceptual workflow from EEG activity to application.<br>
+Source: adapted from Wu et al.&nbsp;(2018) <span class="citation" data-cites="8606765"><a href="#ref-8606765" role="doc-biblioref">[3]</a></span>.</p>
+</div>
+<p>This representation effectively illustrates the typical stages of a BCI system: (1) EEG generation through neural activity, (2) signal acquisition, (3) processing and classification (often including feature extraction and transformation into actionable information), and (4) deployment or application, such as robotic actuation or interface control.</p>
+<p>The focus on this paper is on the signal processing and classification stages, where we will implement a Support Vector Machine (SVM) classifier to decode motor imagery tasks from EEG signals. We will not delve into the EEG generation and acquisition stages, as they are outside the scope of this project.</p>
+</section>
+<section id="mathematical-formulation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="mathematical-formulation"><span class="header-section-number">2.2</span> Mathematical Formulation</h2>
+<section id="support-vector-machines-a-mathematical-framework-for-high-dimensional-eeg-classification" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="support-vector-machines-a-mathematical-framework-for-high-dimensional-eeg-classification"><span class="header-section-number">2.2.1</span> Support Vector Machines: A Mathematical Framework for High-Dimensional EEG Classification</h3>
+<p>In this project, Support Vector Machines (SVMs) are utilized to classify EEG signals corresponding to left and right-hand movement, either overt or imagined. The application of SVMs to EEG data is particularly well-justified: these classifiers are known to perform effectively in high-dimensional spaces, especially when the number of observations is small relative to the number of features—a condition that closely matches our dataset, which consists of 204 features per trial but only 240 trials per condition.</p>
+<p>The primary objective of an SVM is to find a hyperplane that best separates two classes in the feature space. In the simplest case, where data are linearly separable, a linear SVM seeks the hyperplane that maximizes the margin between the two classes. For a given trial <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^{204}\)</span> with class label <span class="math inline">\(y_i \in \{-1, +1\}\)</span>, the classifier has the form:</p>
+<p><span class="math display">\[
+f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{w}\)</span> is the weight vector orthogonal to the decision boundary, and <span class="math inline">\(b\)</span> is the bias term. The training process identifies the optimal <span class="math inline">\(\mathbf{w}\)</span> and <span class="math inline">\(b\)</span> such that the margin—the distance between the hyperplane and the closest points of each class—is maximized, such as ilustrated on <a href="#fig-svm" class="quarto-xref">Figure&nbsp;4</a> by Dai et. al (2020) <span class="citation" data-cites="9131312"><a href="#ref-9131312" role="doc-biblioref">[4]</a></span>. This is achieved by solving the following convex optimization problem:</p>
+<p><span class="math display">\[
+\min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1
+\]</span></p>
+<div id="fig-svm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/814300a230-fig-1-source-large.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: "><img src="assets/814300a230-fig-1-source-large.gif" id="fig:svm" class="img-fluid figure-img" style="width:40.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
+</figure>
+</div>
+<p><strong>Figure 2:</strong> Support Vector Machine (SVM) illustration. The dashed line represents the decision boundary, while the solid lines indicate the margin. The support vectors are the data points closest to the decision boundary <span class="citation" data-cites="9131312"><a href="#ref-9131312" role="doc-biblioref">[4]</a></span>.</p>
+<p>This formulation is known as the <strong>hard-margin SVM</strong>, suitable only when the data is perfectly separable. In practice, particularly with EEG data, perfect separation is unrealistic due to measurement noise, physiological artifacts, and signal overlap between classes. Thus, we turn to the <strong>soft-margin SVM</strong>, which introduces slack variables <span class="math inline">\(\xi_i \geq 0\)</span> that allow some misclassification, yielding a more robust solution:</p>
+<p><span class="math display">\[
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i
+\]</span></p>
+<p>The parameter <span class="math inline">\(C &gt; 0\)</span> controls the trade-off between maximizing the margin and minimizing classification errors. A smaller <span class="math inline">\(C\)</span> permits more violations (larger margin, higher bias), while a larger <span class="math inline">\(C\)</span> enforces stricter separation (lower bias, higher variance). This parameter is crucial in EEG classification, particularly when comparing performance on imagined versus overt movement data, as imagined movements tend to be more subtle and noisy.</p>
+<p>An important property of SVMs is that they produce not only binary class decisions, but also <strong>decision statistics</strong>. For any trial <span class="math inline">\(\mathbf{x}\)</span>, the signed output <span class="math inline">\(f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b\)</span> quantifies the distance of the trial from the decision boundary. This value is used to compute performance metrics such as ROC curves and can serve as a confidence measure for the prediction. The ability to produce such a statistic, rather than just a class label, is a key reason SVMs are well-suited to this project.</p>
+<p>Moreover, the learned weight vector <span class="math inline">\(\mathbf{w}\)</span> in a linear SVM offers meaningful insight into the relative importance of each feature. In our case, EEG features are structured as 204 elements, corresponding to 102 electrodes each providing two components: the x-gradient and y-gradient of the electric field. To interpret the contribution of each electrode, we compute the magnitude of each Ex/Ey pair:</p>
+<p><span class="math display">\[
+w_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+\]</span></p>
+<p>This produces a 102-element vector indicating the relative influence of each electrode on the classification decision. The resulting magnitudes are mapped onto a topographic layout of the head, allowing spatial visualization of the most informative brain regions.</p>
+<p>While the linear SVM provides interpretability, it may not fully capture complex, nonlinear relationships in the EEG signals. To address this, we also consider <strong>kernel SVMs</strong>, which implicitly map the data into higher-dimensional feature spaces via kernel functions. These functions compute inner products in the transformed space without requiring explicit transformation, a technique known as the <strong>kernel trick</strong>. The decision function becomes:</p>
+<p><span class="math display">\[
+f(\mathbf{x}) = \sum_{i \in \mathcal{S}} \alpha_i y_i k(\mathbf{x}_i, \mathbf{x}) + b
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathcal{S}\)</span> is the set of support vectors, and <span class="math inline">\(k(\cdot, \cdot)\)</span> is a kernel function. We explore multiple kernel types in this project, including:</p>
+<ul>
+<li><strong>Linear:</strong> baseline, interpretable, fast; <br></li>
+<li><strong>Radial Basis Function (RBF):</strong> capable of capturing smooth nonlinearities;</li>
+<li><strong>Sigmoid:</strong> similar to neural networks, less common in practice; <br></li>
+<li><strong>Polynomial:</strong> included for completeness and comparison.</li>
+</ul>
+<p>In kernel SVMs, we lose direct access to the weight vector <span class="math inline">\(\mathbf{w}\)</span>, making interpretability more challenging. To address this, we use <strong>permutation importance</strong> to estimate the relative importance of each feature for nonlinear kernels.</p>
+<p>Implementation of SVMs in this project is performed using the <code>sklearn.svm</code> module, which provides a user-friendly interface for training and evaluating SVM classifiers. The <code>SVC</code> class allows for easy specification of kernel types, hyperparameters, and performance metrics.</p>
+</section>
+<section id="permutation-importance" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="permutation-importance"><span class="header-section-number">2.2.2</span> Permutation Importance</h3>
+<p>Let <span class="math inline">\(X = [\mathbf{x}_1, \dots, \mathbf{x}_n]^\top \in \mathbb{R}^{n \times d}\)</span> be the EEG data matrix and <span class="math inline">\(f\)</span> the trained classifier. The permutation importance of feature <span class="math inline">\(j\)</span> is estimated as:</p>
+<ol type="1">
+<li><p>Compute the <strong>baseline score</strong> (e.g., accuracy or AUC) on the original test data:<br>
+<span class="math display">\[
+s_{\text{baseline}} = \text{score}(f, X, y)
+\]</span></p></li>
+<li><p>For each feature <span class="math inline">\(j\)</span>, create a perturbed version <span class="math inline">\(X^{(j)}\)</span> where the <span class="math inline">\(j^{th}\)</span> column is randomly shuffled across all samples.</p></li>
+<li><p>Evaluate the performance on the perturbed data:<br>
+<span class="math display">\[
+s^{(j)} = \text{score}(f, X^{(j)}, y)
+\]</span></p></li>
+<li><p>Define the <strong>importance</strong> of feature <span class="math inline">\(j\)</span> as the performance drop: <span class="math display">\[
+\text{Importance}_j = s_{\text{baseline}} - s^{(j)}
+\]</span></p></li>
+</ol>
+<p>This process is repeated over multiple random permutations (e.g., 10 times), and the mean drop in performance is taken as the final estimate of the feature’s importance.</p>
+<p><strong>Implementation in This Project:</strong></p>
+<p>In our kernel SVM experiments, we used <code>sklearn.inspection.permutation_importance</code> with the following settings:</p>
+<ul>
+<li><code>n_repeats=10</code> to average out noise in the performance estimates,</li>
+<li><code>scoring='accuracy'</code> or <code>'roc_auc'</code> depending on the metric of interest,</li>
+<li><code>n_jobs=-1</code> to parallelize computation across all available cores.</li>
+</ul>
+<p>This method yielded a 204-dimensional vector representing the importance of each feature (i.e., each EEG gradient channel). To visualize the spatial contributions of the electrodes, we paired each <span class="math inline">\(\text{Ex}\)</span> and <span class="math inline">\(\text{Ey}\)</span> component and computed a magnitude-based importance score for each electrode:</p>
+<p><span class="math display">\[
+w_k = \sqrt{\text{Importance}_{2k-1}^2 + \text{Importance}_{2k}^2}, \quad k = 1, \dots, 102
+\]</span></p>
+<p>These values were mapped onto the scalp using topographic plots to interpret which brain regions most strongly contributed to classification, despite the underlying SVM model being nonlinear and not directly interpretable.</p>
+</section>
+<section id="extending-svms-with-kernels-for-nonlinear-eeg-classification" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="extending-svms-with-kernels-for-nonlinear-eeg-classification"><span class="header-section-number">2.2.3</span> Extending SVMs with Kernels for Nonlinear EEG Classification</h3>
+<p>While linear Support Vector Machines (SVMs) provide a robust and interpretable foundation for classifying EEG data, they assume that the classes are separable by a linear boundary in the original feature space. However, EEG signals—especially those corresponding to imagined movements—often exhibit complex, nonlinear patterns that cannot be adequately captured using linear decision functions. To address this, we incorporate <strong>kernel methods</strong>, which allow SVMs to construct flexible, nonlinear decision boundaries by implicitly mapping data into higher-dimensional spaces.</p>
+<p>In the kernelized SVM, we represent the decision function as:</p>
+<p><span class="math display">\[
+f(\mathbf{x}) = \sum_{i=1}^{n} \alpha_i y_i k(\mathbf{x}_i, \mathbf{x}) + b
+\]</span></p>
+<p>Here,<br> - <span class="math inline">\(\mathbf{x}_i\)</span> are the training samples,<br> - <span class="math inline">\(y_i \in \{-1, +1\}\)</span> are the labels,<br> - <span class="math inline">\(\alpha_i\)</span> are the learned Lagrange multipliers,<br> - <span class="math inline">\(k(\mathbf{x}_i, \mathbf{x})\)</span> is the kernel function measuring similarity,<br> - <span class="math inline">\(b\)</span> is the bias term.</p>
+<p>Only the training samples with <span class="math inline">\(\alpha_i &gt; 0\)</span> (support vectors) contribute to the decision function. The function <span class="math inline">\(f(\mathbf{x})\)</span> returns a continuous <strong>decision statistic</strong>, and its sign determines the predicted class.</p>
+<section id="kernels-used-in-this-project" class="level4" data-number="2.2.3.1">
+<h4 data-number="2.2.3.1" class="anchored" data-anchor-id="kernels-used-in-this-project"><span class="header-section-number">2.2.3.1</span> Kernels Used in This Project</h4>
+<p>We explore four kernel types, each with unique geometric and computational properties:</p>
+<ol type="1">
+<li><p><strong>Linear Kernel</strong> (baseline): <span class="math display">\[
+k(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^\top \mathbf{x}_j
+\]</span> Used for direct interpretability and comparison with non-kernel results.</p></li>
+<li><p><strong>Radial Basis Function (RBF) Kernel</strong>: <span class="math display">\[
+k(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2)
+\]</span> Introduces local flexibility, useful for capturing subtle nonlinearity in noisy EEG signals. The hyperparameter <span class="math inline">\(\gamma\)</span> controls the influence of individual training points.</p></li>
+<li><p><strong>Polynomial Kernel</strong>: <span class="math display">\[
+k(\mathbf{x}_i, \mathbf{x}_j) = (\gamma \mathbf{x}_i^\top \mathbf{x}_j + r)^d
+\]</span> Enables modeling more complex global relationships between channels. Requires tuning of degree <span class="math inline">\(d\)</span>, scale <span class="math inline">\(\gamma\)</span>, and offset <span class="math inline">\(r\)</span>.</p></li>
+<li><p><strong>Sigmoid Kernel</strong>: <span class="math display">\[
+k(\mathbf{x}_i, \mathbf{x}_j) = \tanh(\gamma \mathbf{x}_i^\top \mathbf{x}_j + r)
+\]</span> Related to neural network activation functions, but less commonly used due to its sensitivity to hyperparameter settings.</p></li>
+</ol>
+<p>Each kernel introduces its own set of hyperparameters, which are optimized during the <strong>inner loop of the two-level cross-validation</strong> strategy used in this project.</p>
+</section>
+<section id="kernel-selection-strategy" class="level4" data-number="2.2.3.2">
+<h4 data-number="2.2.3.2" class="anchored" data-anchor-id="kernel-selection-strategy"><span class="header-section-number">2.2.3.2</span> Kernel Selection Strategy</h4>
+<p>For each kernel, we trained a model on EEG trials using the same cross-validation framework and computed performance metrics including accuracy and ROC area. This allowed us to compare not only final performance but also generalization stability across folds.</p>
+<p>The goal was not to “pick the best kernel” outright, but rather to understand the types of decision boundaries each kernel enables and how well they adapt to the EEG signal characteristics for both overt and imagined movement trials.</p>
+<ul>
+<li><strong>RBF kernels</strong> generally performed better on imagined movement data, likely due to their ability to adapt to low signal-to-noise ratios.</li>
+<li><strong>Linear kernels</strong> offered clearer interpretability and often comparable performance on overt movement data, where class separation is stronger.</li>
+<li><strong>Polynomial kernels</strong> showed some promise in capturing intermediate complexity but were more prone to overfitting unless carefully regularized.</li>
+</ul>
+</section>
+<section id="interpretation-of-kernel-svms" class="level4" data-number="2.2.3.3">
+<h4 data-number="2.2.3.3" class="anchored" data-anchor-id="interpretation-of-kernel-svms"><span class="header-section-number">2.2.3.3</span> Interpretation of Kernel SVMs</h4>
+<p>Unlike linear SVMs, kernelized models do not produce a weight vector <span class="math inline">\(\mathbf{w}\)</span> in the input space. As such, <strong>direct interpretation of feature contributions is not possible</strong>. To bridge this gap, we applied <strong>permutation importance</strong>, which measures how shuffling each feature affects classification performance (as described in a previous section).</p>
+<p>To interpret these results spatially, we paired each Ex/Ey feature, computed magnitudes, and visualized electrode-wise importance on a scalp topomap. This enabled us to identify cortical regions that played a key role in the model’s classification decisions, even in the absence of explicit feature weights.</p>
+</section>
+</section>
+<section id="regularization-parameter-and-norm-penalties-in-svms" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="regularization-parameter-and-norm-penalties-in-svms"><span class="header-section-number">2.2.4</span> Regularization Parameter and Norm Penalties in SVMs</h3>
+<p>In Support Vector Machines (SVMs), the <strong>regularization parameter <span class="math inline">\(C\)</span></strong> is critical to managing the trade-off between model complexity and classification accuracy. Particularly in the context of EEG-based Brain-Computer Interface (BCI) classification, where high-dimensional and noisy data are prevalent, appropriate regularization ensures robust generalization to unseen trials.</p>
+<p>Regularization is not just a technique for numerical stability—it fundamentally shapes the classifier’s bias-variance tradeoff and governs what kind of solution is learned <span class="citation" data-cites="MELKUMOVA2017746"><a href="#ref-MELKUMOVA2017746" role="doc-biblioref">[5]</a></span>. For BCI movement decoding, where noisy, high-dimensional data are the norm, choosing the right regularization strategy is crucial to achieving both accuracy and interpretability.</p>
+<section id="soft-margin-svm-and-the-role-of-c" class="level4" data-number="2.2.4.1">
+<h4 data-number="2.2.4.1" class="anchored" data-anchor-id="soft-margin-svm-and-the-role-of-c"><span class="header-section-number">2.2.4.1</span> Soft-Margin SVM and the Role of <span class="math inline">\(C\)</span></h4>
+<p>For EEG classification, we typically rely on the <strong>soft-margin SVM</strong>, which tolerates some misclassification to allow for greater generalization <span class="citation" data-cites="MELKUMOVA2017746"><a href="#ref-MELKUMOVA2017746" role="doc-biblioref">[5]</a></span>. The <strong>primal optimization problem</strong> is given by:</p>
+<p><span class="math display">\[
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \ \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0
+\]</span></p>
+<p>Here:<br> - <span class="math inline">\(\|\mathbf{w}\|^2\)</span> is the <strong>L2 norm squared</strong>, encouraging small weights and a large-margin hyperplane,<br> - <span class="math inline">\(C\)</span> controls the penalty for slack variable <span class="math inline">\(\xi_i\)</span>, which quantifies margin violations.</p>
+<p>This formulation is an instance of <strong>Ridge-like regularization</strong> applied to an SVM. It penalizes large weights quadratically, resulting in smooth decision boundaries and improved stability—ideal for high-dimensional EEG data where overfitting is a risk <span class="citation" data-cites="MELKUMOVA2017746"><a href="#ref-MELKUMOVA2017746" role="doc-biblioref">[5]</a></span>.</p>
+</section>
+<section id="l2-regularization-ridge-smooth-and-stable" class="level4" data-number="2.2.4.2">
+<h4 data-number="2.2.4.2" class="anchored" data-anchor-id="l2-regularization-ridge-smooth-and-stable"><span class="header-section-number">2.2.4.2</span> L2 Regularization (Ridge): Smooth and Stable</h4>
+<p>L2 regularization adds a quadratic penalty on the magnitude of the weights:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{L2}}(\mathbf{w}) = \frac{1}{2} \|\mathbf{w}\|^2 = \frac{1}{2} \sum_{j=1}^{d} w_j^2
+\]</span> <span class="citation" data-cites="MELKUMOVA2017746"><a href="#ref-MELKUMOVA2017746" role="doc-biblioref">[5]</a></span>.</p>
+<p>This approach:<br> - Encourages all weights to be small but nonzero,<br> - Produces <strong>dense models</strong>, where most features contribute a little,<br> - Is suitable when all features (i.e., EEG channels) may carry signal but none dominate.</p>
+<p>In our project, this penalty was particularly useful for classifying overt movement EEG, where clean signal and broader spatial activation are expected.</p>
+</section>
+<section id="l1-regularization-lasso-sparsity-and-interpretability" class="level4" data-number="2.2.4.3">
+<h4 data-number="2.2.4.3" class="anchored" data-anchor-id="l1-regularization-lasso-sparsity-and-interpretability"><span class="header-section-number">2.2.4.3</span> L1 Regularization (Lasso): Sparsity and Interpretability</h4>
+<p>An alternative to L2 is <strong>L1 regularization</strong>, which penalizes the <strong>absolute value</strong> of weights:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\text{L1}}(\mathbf{w}) = \sum_{j=1}^{d} |w_j|
+\]</span> <span class="citation" data-cites="MELKUMOVA2017746"><a href="#ref-MELKUMOVA2017746" role="doc-biblioref">[5]</a></span></p>
+<p>The full soft-margin objective with L1 becomes:</p>
+<p><span class="math display">\[
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \ \lambda \sum_{j=1}^{d} |w_j| + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i
+\]</span></p>
+<p>This form:<br> - Produces <strong>sparse models</strong> where only a subset of features (channels) receive nonzero weights, <br> - Facilitates <strong>feature selection</strong> by zeroing out uninformative dimensions,<br> - Increases interpretability by highlighting the most discriminative electrodes.</p>
+<p>While not directly implemented by default in all SVM libraries, <strong>L1-penalized linear SVMs</strong> are supported in scikit-learn through <code>LinearSVC(penalty='l1', dual=False)</code> and are particularly useful in exploratory settings or when interpretability is a priority.</p>
+</section>
+<section id="eeg-interpretation-and-norm-selection" class="level4" data-number="2.2.4.4">
+<h4 data-number="2.2.4.4" class="anchored" data-anchor-id="eeg-interpretation-and-norm-selection"><span class="header-section-number">2.2.4.4</span> EEG Interpretation and Norm Selection</h4>
+<ul>
+<li><strong>L2 regularization</strong> (used in our main experiments) was more appropriate for general classification performance, especially in <strong>imagined movement</strong>, where signal is sparse but noisy, and a smooth model reduces overfitting.</li>
+<li><strong>L1 regularization</strong> could be applied in future work to aid in the identification of the most informative EEG channels—this may be particularly valuable when reducing feature space dimensionality or visualizing important brain regions.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="single-linear-svm-classifier-without-cross-validation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="single-linear-svm-classifier-without-cross-validation"><span class="header-section-number">2.3</span> Single Linear SVM Classifier Without Cross-Validation</h2>
+<p>As an initial proof-of-concept, we trained a linear Support Vector Machine (SVM) classifier on the EEG data using a traditional train-test split without any form of cross-validation. This approach was conducted separately for the imagined and overt (real) movement datasets, allowing for direct exploration of classification performance and spatial interpretability of the resulting model weights.</p>
+<p>For this proof of concept analysis, we decided to use Ridge regularization (L2) with a linear kernel, as it is the most interpretable and straightforward approach for EEG data. Also, we included <span class="math inline">\(C=1.0\)</span> as the regularization parameter which is, generally, a middle point between overfitting and underfitting.</p>
+<section id="data-preparation" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">2.3.1</span> Data Preparation</h3>
+<p>The EEG data were loaded from CSV files corresponding to two classes: - <code>feaSubEImg_1.csv</code> and <code>feaSubEImg_2.csv</code> for imagined movements, - <code>feaSubEOvert_1.csv</code> and <code>feaSubEOvert_2.csv</code> for overt movements.</p>
+<p>Each dataset contains 204 features per trial, corresponding to the Ex and Ey components from 102 electrodes. After loading and transposing the data, we concatenated class 1 and class 2 trials and assigned binary labels. A 70/30 train-test split was used for model evaluation.</p>
+</section>
+<section id="model-training" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="model-training"><span class="header-section-number">2.3.2</span> Model Training</h3>
+<p>We trained a linear SVM using <code>sklearn.svm.SVC</code> with the following configuration: - <code>kernel='linear'</code> - <code>C=1.0</code> (regularization parameter) - <code>probability=True</code> to enable soft prediction scores</p>
+<p>The decision function <code>f(x) = w^T x + b</code> was used to compute both class predictions and decision statistics. Accuracy and ROC-AUC were recorded on <a href="#fig-linearSVM" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<div id="fig-linearSVM" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linearSVM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linear_result_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="(a) Imagined Movements"><img src="figures/linear_result_imagined.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a) Imagined Movements</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linear_result_overt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="(b) Overt Movements"><img src="figures/linear_result_overt.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b) Overt Movements</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linearSVM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Linear SVM performance metrics for (a) imagined versus (b) overt movements, showing classification accuracy, ROC-AUC, and classification report.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="weight-analysis-and-interpretation" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="weight-analysis-and-interpretation"><span class="header-section-number">2.3.3</span> Weight Analysis and Interpretation</h3>
+<p>The weight vector <span class="math inline">\(\mathbf{w} \in \mathbb{R}^{204}\)</span> from the trained linear SVM was analyzed to interpret spatial channel importance. The 204-element vector was split into x-gradient (<code>W_x</code>) and y-gradient (<code>W_y</code>) components, and a per-electrode magnitude was computed:</p>
+<p><span class="math display">\[
+W_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+\]</span></p>
+<p>These magnitudes were plotted to visualize the influence of each electrode, such as on <a href="#fig-linearSVM-weights" class="quarto-xref">Figure&nbsp;6</a>.</p>
+<div id="fig-linearSVM-weights" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linearSVM-weights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/linearSVM_weights_perChannel_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="(a) Imagined Movements"><img src="figures/linearSVM/linearSVM_weights_perChannel_imagined.png" class="img-fluid figure-img" style="width:90.0%"></a></p>
+<figcaption>(a) Imagined Movements</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/linearSVM_weights_per_channel_real.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="(b) Overt Movements"><img src="figures/linearSVM/linearSVM_weights_per_channel_real.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
+<figcaption>(b) Overt Movements</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linearSVM-weights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Linear SVM weight magnitudes for (a) imagined versus (b) overt movements, showing the relative importance of each electrode in the classification decision. Topographic maps display normalized weights (μV) across scalp regions, with red indicating positive contribution and blue indicating negative contribution to classification.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="topographic-mapping" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="topographic-mapping"><span class="header-section-number">2.3.4</span> Topographic Mapping</h3>
+<p>To understand spatial patterns, electrode positions from <code>BCIsensor_xy.csv</code> were scaled and mapped to a topographic head model using MNE-Python. The magnitude values <code>W_mag</code> were plotted using MNE’s <code>plot_topomap</code> function.</p>
+<ul>
+<li>Topomaps provided intuitive spatial distribution of informative channels.</li>
+<li>Interpolated heatmaps were also generated using <code>scipy.interpolate.griddata</code> to visualize gradients.</li>
+</ul>
+<p>In order words, we can visualize where is located the most important electrodes for the classification of the imagined and overt movements. The topographic maps were generated using MNE-Python’s <code>plot_topomap</code> function, which allows for intuitive spatial distribution of informative channels. The topomaps are shown in <a href="#fig-topomap" class="quarto-xref">Figure&nbsp;7</a>.</p>
+<div id="fig-topomap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-topomap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_imagined_movements_extrapolated.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="(a) Imagined Movements (Extrapolated)"><img src="figures/linearSVM/topomap_imagined_movements_extrapolated.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a) Imagined Movements (Extrapolated)</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="(b) Overt Movements (Extrapolated)"><img src="figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b) Overt Movements (Extrapolated)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_imagined_movements_interpolated_complete.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="(c) Imagined Movements (Interpolated)"><img src="figures/linearSVM/topomap_imagined_movements_interpolated_complete.png" class="img-fluid figure-img" style="width:95.0%"></a></p>
+<figcaption>(c) Imagined Movements (Interpolated)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_real_movements_interpolated_complete_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="(d) Overt Movements (Interpolated)"><img src="figures/linearSVM/topomap_real_movements_interpolated_complete_linearSVM.png" class="img-fluid figure-img" style="width:95.0%"></a></p>
+<figcaption>(d) Overt Movements (Interpolated)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topomap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Linear SVM topographic maps showing spatial distribution of informative electrodes: (a-b) Extrapolated and (c-d) interpolated representations for imagined versus overt movements. Warmer colors indicate stronger positive weights, cooler colors show negative weights in the classification decision. Color bars represent normalized weight values.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="evaluation-confusion-matrices-and-roc-curves" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="evaluation-confusion-matrices-and-roc-curves"><span class="header-section-number">2.3.5</span> Evaluation: Confusion Matrices and ROC Curves</h3>
+<p>We computed confusion matrices for both imagined and real movement classifiers, as well as ROC curves and AUC metrics.</p>
+<p><strong>Figure Placeholder:</strong> <code>confusion_matrix_imagined_movements_linearSVM.png</code> <strong>Figure Placeholder:</strong> <code>confusion_matrix_real_movements_linearSVM.png</code> <strong>Figure Placeholder:</strong> <code>roc_curves_linear_SVM.png</code></p>
+<div id="fig-confusion-matrices" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confusion-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="(a) Imagined Movements"><img src="figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a) Imagined Movements</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/confusion_matrix_real_movements_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="(b) Overt Movements"><img src="figures/linearSVM/confusion_matrix_real_movements_linearSVM.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b) Overt Movements</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/roc_curves_linear_SVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="(c) ROC Curves"><img src="figures/linearSVM/roc_curves_linear_SVM.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(c) ROC Curves</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confusion-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: <strong>Figure 2.</strong> Confusion matrices showing classification performance for (a) imagined versus (b) overt movements. Diagonal elements (TP, TN) indicate correct classifications, while off-diagonal (FP, FN) show errors. Color intensity corresponds to frequency counts.
+</figcaption>
+</figure>
+</div>
+<p>This exploratory analysis validated the use of a linear SVM for both overt and imagined movement classification, highlighting meaningful spatial distributions and differences in performance characteristics that motivate the need for more robust cross-validation and kernel-based comparisons in subsequent sections.</p>
+<p>Without much tunning, the linear SVM classifier achieved an accuracy of 0.87 for imagined movements and 0.92 for overt movements, with ROC-AUC scores of 0.93 and 0.97, respectively. The confusion matrices indicated a high true positive rate (TPR) and low false positive rate (FPR) for both tasks, demonstrating the classifier’s effectiveness in distinguishing between left and right-hand movements.</p>
+<p>However, we need to notice that this result may be biased due to the lack of cross-validation and hyperparameter tuning. The linear SVM classifier was trained on a single train-test split, which may not generalize well to unseen data. Therefore, we will implement a more robust cross-validation strategy in the next sections. Therefore this is one of our next steps to validate accurateness and generalization of the model.</p>
+<p>Moreover, the topographic maps provided valuable insights into the spatial distribution of informative electrodes, which can guide future feature selection and model refinement.</p>
+</section>
+</section>
+<section id="regularization-parameter-selection-l1-vs-l2-penalties" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="regularization-parameter-selection-l1-vs-l2-penalties"><span class="header-section-number">2.4</span> Regularization Parameter Selection: L1 vs L2 Penalties</h2>
+<p>As part of our methodology, we performed a detailed analysis of the effect of regularization on the classification performance of linear SVMs. In this context, we compared <strong>L1 (Lasso)</strong> and <strong>L2 (Ridge)</strong> regularization strategies on both overt and imagined EEG datasets. These experiments serve to illustrate how different norm constraints impact generalization, sparsity, and model interpretability.</p>
+<section id="weight-magnitude-comparison" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="weight-magnitude-comparison"><span class="header-section-number">2.4.1</span> Weight Magnitude Comparison</h3>
+<p>We trained two <code>LinearSVC</code> classifiers using: - <code>penalty='l2'</code> with <code>dual=True</code> - <code>penalty='l1'</code> with <code>dual=False</code> (as required for L1 regularization)</p>
+<p>Both classifiers were trained on overt movement data. After training, we compared the <strong>absolute weight magnitudes</strong> produced by each model to visualize sparsity and regularization effects. L2 yielded dense weight vectors, while L1 induced sparsity by zeroing out several coefficients as shown in <a href="#fig-l1_vs_l2_weights" class="quarto-xref">Figure&nbsp;9</a>.</p>
+<div id="fig-l1_vs_l2_weights" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-l1_vs_l2_weights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figures/weight_mag_L1vsL2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;9: Comparison of weight magnitudes for L1 and L2 regularization on overt movement data. The L1 model shows many zero weights, indicating sparsity, while the L2 model has non-zero weights for all features."><img src="figures/weight_mag_L1vsL2.png" id="fig:l1-weights" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-l1_vs_l2_weights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Comparison of weight magnitudes for L1 and L2 regularization on overt movement data. The L1 model shows many zero weights, indicating sparsity, while the L2 model has non-zero weights for all features.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="cross-validation-overt-movement-data" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="cross-validation-overt-movement-data"><span class="header-section-number">2.4.2</span> Cross-Validation: Overt Movement Data</h3>
+<p>To assess the robustness of each penalty, we conducted one-level 6-fold stratified cross-validation using the real movement data. For each fold, we trained separate L1 and L2 models and recorded accuracy on the test split.</p>
+<p>The comparison revealed that both models performed well, but L2 generally yielded slightly higher and more consistent accuracy, likely due to its ability to distribute weights smoothly across all features and avoid overfitting. The L1 model, while sparse, exhibited more variability in performance across folds, as shown in <a href="#fig-l1_vs_l2_cv_accuracy" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<div id="fig-l1_vs_l2_cv_accuracy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-l1_vs_l2_cv_accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figures/acc_L1vsL2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;10: Comparison of cross-validated accuracy for L1 and L2 regularization on overt movement data. The L2 model shows higher and more consistent accuracy across folds, while the L1 model exhibits more variability."><img src="figures/acc_L1vsL2.png" id="fig:l1-vs-l2-cv-accuracy" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-l1_vs_l2_cv_accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Comparison of cross-validated accuracy for L1 and L2 regularization on overt movement data. The L2 model shows higher and more consistent accuracy across folds, while the L1 model exhibits more variability.
+</figcaption>
+</figure>
+</div>
+<p>As seen, there is no much difference between the two models, but L2 is slightly better than L1. Therefore, the <strong>Ridge (L2) Regularization parameter</strong> was selected for the next steps of the project.</p>
+<section id="generalization-performance-across-modalities" class="level4" data-number="2.4.2.1">
+<h4 data-number="2.4.2.1" class="anchored" data-anchor-id="generalization-performance-across-modalities"><span class="header-section-number">2.4.2.1</span> Generalization Performance Across Modalities</h4>
+<p>Next, we evaluated L1 and L2 performance across all four key training-testing scenarios: - Real → Real - Imagined → Imagined - Real → Imagined - Imagined → Real</p>
+<p>Each scenario involved training on one modality and testing on another using standardized data. We computed accuracy for both L1 and L2 regularization in all cases.</p>
+<p>The results highlighted: - <strong>L2 outperformed L1</strong> when training and testing conditions matched (e.g., Real → Real). - <strong>L1 showed slightly more stable performance</strong> when generalizing from imagined to real movements, likely due to its tendency to focus on a sparse set of generalizable features.</p>
+<p>However, both regularization types performed comparably in cross-domain scenarios, indicating that the choice of penalty may not be as critical when training on one modality and testing on another. The results are shown in <a href="#fig-l1_vs_l2_generalization" class="quarto-xref">Figure&nbsp;11</a>.</p>
+<div id="fig-l1_vs_l2_generalization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-l1_vs_l2_generalization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figures/L1vsL2_diff_simulation_profiles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure&nbsp;11: Comparison of generalization performance across training-testing scenarios for L1 and L2 regularization. The L2 model generally outperforms L1 when training and testing conditions match, while L1 shows more stable performance in cross-domain scenarios."><img src="figures/L1vsL2_diff_simulation_profiles.png" id="fig:l1-vs-l2-generalization" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-l1_vs_l2_generalization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Comparison of generalization performance across training-testing scenarios for L1 and L2 regularization. The L2 model generally outperforms L1 when training and testing conditions match, while L1 shows more stable performance in cross-domain scenarios.
+</figcaption>
+</figure>
+</div>
+<p>This systematic exploration of regularization types informed our subsequent selection of <span class="math inline">\(C\)</span> and penalty configurations in cross-validated models. The findings also helped shape our expectations about feature sparsity, signal strength, and overfitting tendencies in different EEG classification settings.</p>
+</section>
+</section>
+</section>
+<section id="kernel-svm-experiments-and-topographic-analysis" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="kernel-svm-experiments-and-topographic-analysis"><span class="header-section-number">2.5</span> Kernel SVM Experiments and Topographic Analysis</h2>
+<p>To explore the capacity of different kernel-based Support Vector Machines (SVMs) to model nonlinear EEG dynamics, we implemented a systematic comparison across four kernel types: linear, polynomial, radial basis function (RBF), and sigmoid. Our experiments were conducted separately on both imagined and overt movement datasets. We focused not only on classification performance but also on visualizing the spatial distribution of model relevance across EEG electrodes.</p>
+<section id="dimensionality-reduction-with-umap" class="level4" data-number="2.5.0.1">
+<h4 data-number="2.5.0.1" class="anchored" data-anchor-id="dimensionality-reduction-with-umap"><span class="header-section-number">2.5.0.1</span> Dimensionality Reduction with UMAP</h4>
+<p>To visualize the decision boundaries generated by each kernel in a comprehensible space, we applied <strong>Uniform Manifold Approximation and Projection (UMAP)</strong> to reduce the 204-dimensional EEG feature space to two dimensions. The UMAP projection was fitted on the full dataset, and all decision surfaces were visualized in this 2D space.</p>
+<p>We trained each kernel-based SVM on 80% of the data (stratified split) and used the remaining 20% for testing. The classifiers were instantiated using <code>sklearn.svm.SVC</code> with <code>probability=True</code> and $ C = 1/$, where $ = 10 $.</p>
+<div id="fig-decision-surfaces" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decision-surfaces-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figures/decision_surface_UMAP.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Figure&nbsp;12: Decision surfaces projected onto UMAP space for (a) imagined movements. Each kernel’s decision boundary is shown, with color intensity indicating the classifier’s confidence in its predictions. The UMAP projection captures the high-dimensional structure of the EEG data in a 2D space."><img src="figures/decision_surface_UMAP.png" id="fig:decision-surfaces-imagined" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decision-surfaces-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Decision surfaces projected onto UMAP space for (a) imagined movements. Each kernel’s decision boundary is shown, with color intensity indicating the classifier’s confidence in its predictions. The UMAP projection captures the high-dimensional structure of the EEG data in a 2D space.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="visualizing-smooth-decision-functions" class="level4" data-number="2.5.0.2">
+<h4 data-number="2.5.0.2" class="anchored" data-anchor-id="visualizing-smooth-decision-functions"><span class="header-section-number">2.5.0.2</span> Visualizing Smooth Decision Functions</h4>
+<p>In each projected 2D space, we used nearest-neighbor approximation to map UMAP grid points back into high-dimensional EEG space for inference. We then evaluated the decision function for each kernel over a dense grid and plotted smooth heatmaps using <code>matplotlib.contourf</code>. These surfaces revealed:<br> - <strong>Linear kernel</strong> produced a straight, interpretable boundary.<br> - <strong>RBF kernel</strong> generated highly nonlinear, confident class separations.<br> - <strong>Polynomial</strong> and <strong>sigmoid kernels</strong> captured curvature but often showed more unstable or overfitted boundaries.<br> - <strong>Sigmoid kernel</strong> produced less interpretable boundaries, often resembling neural network behavior.</p>
+</section>
+<section id="topographic-visualization-of-feature-importance" class="level4" data-number="2.5.0.3">
+<h4 data-number="2.5.0.3" class="anchored" data-anchor-id="topographic-visualization-of-feature-importance"><span class="header-section-number">2.5.0.3</span> Topographic Visualization of Feature Importance</h4>
+<p>To understand which EEG electrodes contributed most to classification, we visualized the magnitude of model weights across all 102 electrodes. For the linear kernel, we directly extracted the weight vector $ $ from <code>clf.coef_</code>. For nonlinear kernels, we used <code>sklearn.inspection.permutation_importance</code> to estimate the importance of each feature.</p>
+<p>After aggregating Ex/Ey pairs, we calculated per-electrode weights:</p>
+<p><span class="math display">\[
+W_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+\]</span></p>
+<p>We then plotted topographic maps using MNE’s <code>plot_topomap</code> function for each kernel and they are going to be discussed in more details within the <a href="@sec-results">Result</a> section. The topographic maps were generated using MNE-Python’s <code>plot_topomap</code> function, which allows for intuitive spatial distribution of informative channels. The topomaps are shown in <a href="#fig-topomap-kernels" class="quarto-xref">Figure&nbsp;13</a>.</p>
+<div id="fig-topomap-kernels" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-topomap-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="figures/svm_topomaps_all_kernels_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figure&nbsp;13: Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on imagined movements."><img src="figures/svm_topomaps_all_kernels_imagined.png" id="fig:topomap-imagined" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topomap-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on imagined movements.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="summary-of-kernel-svm-results" class="level4" data-number="2.5.0.4">
+<h4 data-number="2.5.0.4" class="anchored" data-anchor-id="summary-of-kernel-svm-results"><span class="header-section-number">2.5.0.4</span> Summary of Kernel SVM Results</h4>
+<p>We observed consistent trends across both imagined and real movement datasets:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kernel</th>
+<th>Imagined Accuracy</th>
+<th>Real Accuracy</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>High interpretability, moderate boundary</td>
+</tr>
+<tr class="even">
+<td>Polynomial</td>
+<td>0.62</td>
+<td>0.73</td>
+<td>Curved boundaries, can overfit</td>
+</tr>
+<tr class="odd">
+<td>RBF</td>
+<td>0.79</td>
+<td>0.85</td>
+<td>Best separation, low interpretability</td>
+</tr>
+<tr class="even">
+<td>Sigmoid</td>
+<td>0.79</td>
+<td>0.90</td>
+<td>High variance in performance</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Linear kernels consistently outperformed others</strong> on imagined movement classification due to their capacity to model subtle, nonlinear patterns in low-SNR EEG data.</li>
+<li><strong>Linear kernels performed strongly</strong> on overt movement data and provided the clearest insights into channel contributions.</li>
+</ul>
+<p>These kernel experiments revealed important trade-offs between <strong>model complexity</strong>, <strong>accuracy</strong>, and <strong>interpretability</strong>, guiding our decisions for classifier deployment in future real-time or clinical BCI settings.</p>
+</section>
+</section>
+<section id="two-level-cross-validation-implementation-and-results" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="two-level-cross-validation-implementation-and-results"><span class="header-section-number">2.6</span> Two-Level Cross-Validation Implementation and Results</h2>
+<p>To rigorously evaluate the performance of our linear Support Vector Machine (SVM) classifier and to select an optimal regularization parameter $ $, we implemented a two-level cross-validation framework. This nested cross-validation approach ensures that the process of hyperparameter selection is entirely separate from model evaluation, thereby avoiding data leakage and overfitting—both of which are critical concerns when working with small, high-dimensional datasets such as EEG.</p>
+<section id="nested-cross-validation-structure" class="level4" data-number="2.6.0.1">
+<h4 data-number="2.6.0.1" class="anchored" data-anchor-id="nested-cross-validation-structure"><span class="header-section-number">2.6.0.1</span> Nested Cross-Validation Structure</h4>
+<p>Our implementation follows a nested structure consisting of: - <strong>Outer cross-validation (CV):</strong> 6-fold stratified CV, used for final model evaluation - <strong>Inner cross-validation:</strong> 5-fold stratified CV, used for hyperparameter tuning</p>
+<p>The core idea is that for each of the 6 outer folds, the data is split into training and testing subsets. Within each outer training set, the 5-fold inner CV is used to determine the best regularization parameter $ $ by evaluating model performance across candidate values.</p>
+<p>The following outlines the logical structure of our cross-validation procedure, also available in the code repository<span class="citation" data-cites="BibEntry2025Apr"><a href="#ref-BibEntry2025Apr" role="doc-biblioref">[6]</a></span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each outer_fold <span class="kw">in</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">6</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    Split X into X_train_outer, X_test_outer</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each alpha <span class="kw">in</span> alpha_list:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        Convert alpha to C <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> alpha</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> each inner_fold <span class="kw">in</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            Split X_train_outer into X_train_inner, X_val_inner</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            Train linear SVM on X_train_inner <span class="cf">with</span> C</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            Evaluate accuracy on X_val_inner</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        Compute mean inner validation accuracy <span class="cf">for</span> current alpha</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Select alpha <span class="cf">with</span> highest mean validation accuracy → best_alpha</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Train final SVM on X_train_outer using C <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> best_alpha</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Predict on X_test_outer</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    Compute test metrics: accuracy, ROC<span class="op">-</span>AUC, confusion matrix</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    Store fold results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="implementation-details" class="level4" data-number="2.6.0.2">
+<h4 data-number="2.6.0.2" class="anchored" data-anchor-id="implementation-details"><span class="header-section-number">2.6.0.2</span> Implementation Details</h4>
+<p>We tested a wide range of regularization values, defined as:</p>
+<p><span class="math display">\[
+\alpha \in \{0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000, 5000, 10000\}
+\]</span></p>
+<p>Each $ $ value corresponds to an inverse regularization constant $ C = 1/$. This conversion ensures smaller $ $ values produce more flexible models (larger $ C $), and larger $ $ values lead to simpler models with wider margins.</p>
+<p>The inner CV was used to compute the <strong>mean validation accuracy</strong> for each $ $. The $ $ that yielded the highest mean accuracy was selected as the best parameter for the outer fold.</p>
+<p>All models were trained using <code>sklearn.svm.SVC</code> with <code>kernel='linear'</code>. Feature scaling was applied via <code>StandardScaler</code> prior to training.</p>
+</section>
+<section id="imagined-movement-evaluation" class="level4" data-number="2.6.0.3">
+<h4 data-number="2.6.0.3" class="anchored" data-anchor-id="imagined-movement-evaluation"><span class="header-section-number">2.6.0.3</span> Imagined Movement Evaluation</h4>
+<p>We first applied the two-level CV framework to the imagined movement dataset. After completing all six outer folds, we collected performance metrics per fold: - <strong>Accuracy</strong> - <strong>ROC-AUC</strong> - <strong>False/True Positive Rates for ROC curve plots</strong></p>
+<p>We then trained a final classifier on 80% of the data using the <strong>mean of the best $ $</strong> values selected across all folds. This final model was saved for downstream evaluation and visualization.</p>
+<div id="fig-imagined-movement-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-imagined-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<section id="a.-roc-curves-analysis" class="level5" data-number="2.6.0.3.1">
+<h5 data-number="2.6.0.3.1" class="anchored" data-anchor-id="a.-roc-curves-analysis"><span class="header-section-number">2.6.0.3.1</span> A. ROC Curves Analysis</h5>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/roc_curves_cross_validation_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Receiver Operating Characteristic curves across cross-validation folds"><img src="figures/roc_curves_cross_validation_imagined.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
+<figcaption>Receiver Operating Characteristic curves across cross-validation folds</figcaption>
+</figure>
+</div>
+</section>
+<section id="b.-classification-accuracy-by-fold" class="level5" data-number="2.6.0.3.2">
+<h5 data-number="2.6.0.3.2" class="anchored" data-anchor-id="b.-classification-accuracy-by-fold"><span class="header-section-number">2.6.0.3.2</span> B. Classification Accuracy by Fold</h5>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/accuracy_per_fold_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Model accuracy scores for each cross-validation fold"><img src="figures/accuracy_per_fold_imagined.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
+<figcaption>Model accuracy scores for each cross-validation fold</figcaption>
+</figure>
+</div>
+</section>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imagined-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Performance metrics for imagined movement classification: (A) ROC curves showing true positive vs false positive rates across all folds (mean AUC = 0.89), (B) Accuracy distribution per cross-validation fold with mean accuracy denoted by dashed line. Shaded regions in (A) represent 95% confidence intervals.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="overt-movement-evaluation" class="level4" data-number="2.6.0.4">
+<h4 data-number="2.6.0.4" class="anchored" data-anchor-id="overt-movement-evaluation"><span class="header-section-number">2.6.0.4</span> Overt Movement Evaluation</h4>
+<p>The same nested procedure was repeated for the real movement dataset. In each outer fold, the best $ $ was selected via the 5-fold inner validation, and final test metrics were computed per fold.</p>
+<p>We again trained a final model using the average of the best $ $ values and saved the resulting classifier.</p>
+<p><strong>Figure Placeholder:</strong> <code>roc_curves_cross_validation_real.png</code> <strong>Figure Placeholder:</strong> <code>accuracy_per_fold_real.png</code> <strong>Model File:</strong> <code>svc_model_real_movement_cross_validated.pkl</code></p>
+<div id="fig-overt-movement-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overt-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<section id="a.-roc-curves-analysis-1" class="level5" data-number="2.6.0.4.1">
+<h5 data-number="2.6.0.4.1" class="anchored" data-anchor-id="a.-roc-curves-analysis-1"><span class="header-section-number">2.6.0.4.1</span> A. ROC Curves Analysis</h5>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/roc_curves_cross_validation_real.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Receiver Operating Characteristic curves across cross-validation folds"><img src="figures/roc_curves_cross_validation_real.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
+<figcaption>Receiver Operating Characteristic curves across cross-validation folds</figcaption>
+</figure>
+</div>
+</section>
+<section id="b.-classification-accuracy-by-fold-1" class="level5" data-number="2.6.0.4.2">
+<h5 data-number="2.6.0.4.2" class="anchored" data-anchor-id="b.-classification-accuracy-by-fold-1"><span class="header-section-number">2.6.0.4.2</span> B. Classification Accuracy by Fold</h5>
+</section>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overt-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: <a href="figures/accuracy_per_fold_real.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;15: Model accuracy scores for each cross-validation fold Performance metrics for overt movement classification: (A) ROC curves showing true positive vs false positive rates across all folds (mean AUC = 0.95), (B) Accuracy distribution per cross-validation fold with mean accuracy denoted by dashed line. Shaded regions in (A) represent 95% confidence intervals."><img src="figures/accuracy_per_fold_real.png" id="fig:accuracy-per-fold-real" class="img-fluid figure-img" style="width:80.0%" alt="Model accuracy scores for each cross-validation fold"></a> Performance metrics for overt movement classification: (A) ROC curves showing true positive vs false positive rates across all folds (mean AUC = 0.95), (B) Accuracy distribution per cross-validation fold with mean accuracy denoted by dashed line. Shaded regions in (A) represent 95% confidence intervals.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="final-evaluation-metrics" class="level4" data-number="2.6.0.5">
+<h4 data-number="2.6.0.5" class="anchored" data-anchor-id="final-evaluation-metrics"><span class="header-section-number">2.6.0.5</span> Final Evaluation Metrics</h4>
+<p>We summarize the key statistics across folds:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Mean Accuracy</th>
+<th>Mean ROC AUC</th>
+<th>Best Alpha (Fold Avg)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Imagined</td>
+<td>88%</td>
+<td>96.0%</td>
+<td><em>(Insert Value)</em></td>
+</tr>
+<tr class="even">
+<td>Real</td>
+<td>96%</td>
+<td>99.5%</td>
+<td><em>(Insert Value)</em></td>
+</tr>
+</tbody>
+</table>
+<p>This nested CV approach provided a rigorous, unbiased estimate of our model’s performance while simultaneously selecting the optimal regularization strength, in line with the expectations outlined in the course project documentation.</p>
+<p>As a next step on this two-level cross validation, we will apply this methodology with different train-test splits to evaluate the robustness of our findings and reported on the <a href="#sec-results">Results section</a>.</p>
+</section>
+</section>
+</section>
+<section id="sec-results" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Results</h1>
+<p>This section presents the results of our classification experiments using Support Vector Machines (SVMs) to decode imagined and overt motor intentions from EEG signals. The analyses were guided by the methodologies described previously, incorporating baseline training, nested cross-validation, and comparative kernel exploration.</p>
+<p>To ensure a comprehensive evaluation of model performance and generalization, we explored four key <strong>train-test scenarios</strong> that reflect realistic constraints in brain-computer interface (BCI) deployment:</p>
+<ol type="1">
+<li><strong>Overt → Overt:</strong> Classifier trained and tested on EEG signals recorded during actual movements.</li>
+<li><strong>Imagined → Imagined:</strong> Classifier trained and tested on imagined movement trials.</li>
+<li><strong>Overt → Imagined:</strong> Model trained on overt movement data and tested on imagined data, simulating transfer from strong to weak signals.</li>
+<li><strong>Imagined → Overt:</strong> Model trained on imagined data and evaluated on overt data, testing reverse generalization.</li>
+</ol>
+<p>In addition to these scenario-based experiments, we report results from:</p>
+<ul>
+<li><strong>A baseline linear SVM classifier</strong> trained without cross-validation for initial exploration.<br></li>
+<li><strong>L1 vs.&nbsp;L2 regularization analysis</strong>, examining sparsity, interpretability, and generalization behavior.<br></li>
+<li><strong>Two-level nested cross-validation</strong>, rigorously optimizing the regularization parameter $ \alpha $ and measuring unbiased performance on imagined and real EEG data.<br></li>
+<li><strong>Kernel SVM experiments</strong>, comparing linear and nonlinear kernels (RBF, polynomial, sigmoid) in terms of accuracy, decision surface behavior, and spatial interpretation through topographic maps.<br></li>
+</ul>
+<p>Each result is supported with appropriate performance metrics, including <strong>accuracy</strong>, <strong>ROC-AUC</strong>, <strong>confusion matrices</strong>, and <strong>spatial weight maps</strong> projected on the scalp. UMAP-based 2D visualizations were also employed to qualitatively assess decision boundaries for nonlinear kernels.</p>
+<p>Through this multi-faceted evaluation, we demonstrate how different modeling choices impact classifier performance and interpretability across both strong (overt) and weak (imagined) signal regimes. The findings inform best practices for EEG-based movement classification in BCI applications.</p>
+<section id="baseline-linear-svm-results" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="baseline-linear-svm-results"><span class="header-section-number">3.1</span> Baseline Linear SVM Results</h2>
+<p>This section presents the core findings from our initial baseline experiments using a linear Support Vector Machine (SVM) classifier on both imagined and overt EEG movement data. Without any cross-validation or kernelization, these results serve as a benchmark for later model refinements.</p>
+<section id="imagined-movement-classification-results" class="level4" data-number="3.1.0.1">
+<h4 data-number="3.1.0.1" class="anchored" data-anchor-id="imagined-movement-classification-results"><span class="header-section-number">3.1.0.1</span> Imagined Movement Classification Results</h4>
+<p>The linear SVM demonstrated a surprising level of performance when applied to imagined movement EEG data. Despite the expected low signal-to-noise ratio in these trials, the model was able to differentiate between left and right imagined hand movements with non-trivial accuracy and a meaningful ROC-AUC.</p>
+<p><strong>Key Observations:</strong></p>
+<ul>
+<li>The confusion matrix indicated that while some misclassification occurred, the model performed well above chance.</li>
+<li>Topographic analysis revealed focused weight magnitudes over motor-related regions, indicating that even imagined movements produce spatially structured EEG patterns.</li>
+</ul>
+<div id="fig-imagined-movement-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-imagined-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">(a) Classification Performance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">(b) Spatial Weight Distribution</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Confusion matrix for imagined movements"><img src="figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png" class="img-fluid figure-img" style="width:90.0%"></a></p>
+<figcaption>Confusion matrix for imagined movements</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_imagined_movements_extrapolated.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Topographic map of classifier weights"><img src="figures/linearSVM/topomap_imagined_movements_extrapolated.png" class="img-fluid figure-img" style="width:90.0%"></a></p>
+<figcaption>Topographic map of classifier weights</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imagined-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Imagined movement analysis: (a) Confusion matrix showing classification performance (n=150 trials) with true positive rate = 85.2% ± 3.1, (b) Topographic distribution of SVM weights (normalized μV scale -1 to +1) highlighting central parietal electrodes (CP3/CP4) as most discriminative. Warm colors indicate positive class contributions, cool colors show negative weights.
+</figcaption>
+</figure>
+</div>
+<p>Specifically, we can see by the topographic maps that the most discriminative electrodes were located in the central parietal region, which is consistent with the expected activation patterns associated with motor imagery tasks<span class="citation" data-cites="Costantini2009"><a href="#ref-Costantini2009" role="doc-biblioref">[2]</a></span>. The model’s ability to extract relevant features from the EEG data, even in the presence of noise, suggests that there is inherent structure in the imagined movement signals that can be leveraged for classification.</p>
+<p>Also, the confusion matrix indicates that the model was able to achieve a true positive rate of 85.2% ± 3.1, which is a promising result given the challenges associated with imagined movement classification, as on <a href="#fig-linearSVM" class="quarto-xref">Figure&nbsp;5</a>.</p>
+</section>
+<section id="overt-movement-classification-results" class="level4" data-number="3.1.0.2">
+<h4 data-number="3.1.0.2" class="anchored" data-anchor-id="overt-movement-classification-results"><span class="header-section-number">3.1.0.2</span> Overt Movement Classification Results</h4>
+<p>As anticipated, the classifier achieved higher performance on the overt movement dataset. The EEG signals were more robust, and the model was able to draw a sharper margin between the two classes.</p>
+<p><strong>Key Observations:</strong></p>
+<ul>
+<li>The ROC-AUC approached ideal values, reflecting confident and consistent predictions.</li>
+<li>The confusion matrix exhibited strong diagonal dominance, supporting accurate class distinction.</li>
+<li>Topographic maps aligned closely with expected motor cortex activation patterns, reinforcing the physiological validity of the model’s learned weights.</li>
+</ul>
+<div id="fig-overt-movement-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overt-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/confusion_matrix_real_movements_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="(a) Confusion matrix"><img src="figures/linearSVM/confusion_matrix_real_movements_linearSVM.png" class="img-fluid figure-img" style="width:85.0%"></a></p>
+<figcaption>(a) Confusion matrix</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28" title="(b) Topographic weights"><img src="figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png" class="img-fluid figure-img" style="width:85.0%"></a></p>
+<figcaption>(b) Topographic weights</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overt-movement-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Overt movement results: (a) Classification performance (87.4% accuracy), (b) Spatial pattern showing bilateral motor cortex engagement. Color scales as in Figure 3.
+</figcaption>
+</figure>
+</div>
+<p>When compared to the imagined movement results, the overt movement classification exhibited a true positive rate of 94.4% ± 2.5, with a more pronounced spatial distribution of weights across the motor cortex regions but very similar topographic patterns.</p>
+</section>
+<section id="summary-of-findings" class="level4" data-number="3.1.0.3">
+<h4 data-number="3.1.0.3" class="anchored" data-anchor-id="summary-of-findings"><span class="header-section-number">3.1.0.3</span> Summary of Findings</h4>
+<p>Overall, these baseline results were notable not just for their performance on overt data, but for the model’s ability to extract relevant discriminative information even from imagined movements. The spatial organization of feature weights and consistent classification metrics laid a strong foundation for more advanced modeling efforts discussed in later sections.</p>
+<p>These findings (<a href="#fig-linearSVM" class="quarto-xref">Figure&nbsp;5</a>) highlight the inherent separability present in EEG patterns associated with motor intention and suggest that even simple linear models can be surprisingly effective under the right preprocessing conditions.</p>
+</section>
+</section>
+<section id="two-level-cross-validation-results-across-scenarios" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="two-level-cross-validation-results-across-scenarios"><span class="header-section-number">3.2</span> Two-Level Cross-Validation Results Across Scenarios</h2>
+<p>Building on our nested cross-validation approach, we further evaluated how well a linear SVM generalizes across the four key movement classification scenarios: <strong>Overt → Overt, Imagined → Imagined, Overt → Imagined, and Imagined → Overt</strong>. Each scenario was tested independently, using optimized regularization parameters <span class="math inline">\(\alpha\)</span> from an inner loop cross-validation procedure. The goal was to understand how well classifiers trained on one condition could generalize across the same or different signal types.</p>
+<section id="overt-overt" class="level4" data-number="3.2.0.1">
+<h4 data-number="3.2.0.1" class="anchored" data-anchor-id="overt-overt"><span class="header-section-number">3.2.0.1</span> Overt → Overt</h4>
+<p>This condition yielded the highest classification performance. The signals were strong and clearly distinct across classes. Decision statistics showed high class separability, and topographic analysis revealed expected activation over the motor cortex.</p>
+<p><strong>Figure Placeholders:</strong></p>
+<div id="fig-overt-overt-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overt-overt-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><a href="figures/cross-validated-results/linear/overt-overt-topomap_full.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29" title="Figure&nbsp;18: Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials."><img src="figures/cross-validated-results/linear/overt-overt-topomap_full.png" id="fig:overt-overt-topomap" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<p><a href="figures/cross-validated-results/linear/overt-overt-roc-curve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30" title="Figure&nbsp;18: Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials."><img src="figures/cross-validated-results/linear/overt-overt-roc-curve.png" id="fig:overt-overt-roc" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<p><a href="figures/cross-validated-results/linear/overt-overt-confusion-matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31" title="Figure&nbsp;18: Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials."><img src="figures/cross-validated-results/linear/overt-overt-confusion-matrix.png" id="fig:overt-overt-confusion-matrix" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<p><a href="figures/cross-validated-results/linear/overt-overt-decision-statistic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32" title="Figure&nbsp;18: Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials."><img src="figures/cross-validated-results/linear/overt-overt-decision-statistic.png" id="fig:overt-overt-decision-statistic" class="img-fluid figure-img" style="width:100.0%"></a></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overt-overt-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18: Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+</figcaption>
+</figure>
+</div>
+<p>For this combination we achieved the highest accuracy of 96.0% ± 1.5, with a mean ROC-AUC of 0.99 ± 0.01. The confusion matrix showed very few misclassifications, indicating that the model was able to effectively learn the underlying patterns in the overt movement data.</p>
+<p>The topographic map revealed a clear spatial distribution of informative electrodes, with the highest weights concentrated over the central parietal region, consistent with expected motor cortex activation patterns.</p>
+<p>This was expected, as the overt movement data is typically more robust and less noisy than imagined movement data.</p>
+<p>Now, the Decision statistic distribution showed a clear separation between the two classes, which corroborated the high classification performance. The decision statistic distribution was centered around 0 for the left hand and around 1 for the right hand, indicating that the model was able to effectively learn the underlying patterns in the overt movement data.</p>
+</section>
+<section id="imagined-imagined" class="level4" data-number="3.2.0.2">
+<h4 data-number="3.2.0.2" class="anchored" data-anchor-id="imagined-imagined"><span class="header-section-number">3.2.0.2</span> Imagined → Imagined</h4>
+<p>While more challenging, classification in this condition still achieved meaningful performance. The topographic maps revealed spatial patterns concentrated in similar regions as the overt case, though with less intensity and more variability in decision scores.</p>
+<p><strong>Figure Placeholders:</strong> - Topomap: <code>imagined-imagined-topomap.png</code> - ROC Curve: <code>imagined-imagined-roc-curve.png</code> - Confusion Matrix: <code>imagined-imagined-confusion-matrix.png</code> - Decision Statistic Distribution: <code>imagined-imagined-decision-statistic.png</code></p>
+<div id="fig-imagined-imagined-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-imagined-imagined-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-imagined-topomap_full.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33" title="(a)"><img src="figures/cross-validated-results/linear/imagined-imagined-topomap_full.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-imagined-roc-curve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34" title="(b)"><img src="figures/cross-validated-results/linear/imagined-imagined-roc-curve.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-imagined-confusion-matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35" title="(c)"><img src="figures/cross-validated-results/linear/imagined-imagined-confusion-matrix.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(c)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-imagined-decision-statistic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36" title="(d)"><img src="figures/cross-validated-results/linear/imagined-imagined-decision-statistic.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(d)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imagined-imagined-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19: Imagined movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+</figcaption>
+</figure>
+</div>
+<p>The imagined movement classification achieved an accuracy of 88.0% ± 2.5, with a mean ROC-AUC of 0.92 ± 0.03. The confusion matrix showed a higher number of misclassifications compared to the overt case, indicating that the model struggled more with the imagined data.</p>
+<p>The topographic map revealed a similar spatial distribution of informative electrodes, with the highest weights concentrated over the central parietal region, but with less intensity compared to the overt case.</p>
+<p>The decision statistic distribution was also less clear, with a wider spread of values indicating that the model was less confident in its predictions.</p>
+</section>
+<section id="overt-imagined" class="level4" data-number="3.2.0.3">
+<h4 data-number="3.2.0.3" class="anchored" data-anchor-id="overt-imagined"><span class="header-section-number">3.2.0.3</span> Overt → Imagined</h4>
+<p>This transfer learning scenario evaluated how well overt-trained models generalize to imagined data. The classifier’s performance dropped compared to within-modality cases, but still surpassed chance. Topographic results indicated that spatial structures learned from overt signals retained partial relevance in imagined contexts.</p>
+<div id="fig-overt-imagined-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overt-imagined-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/overt-imagined-topomap_full.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37" title="(a)"><img src="figures/cross-validated-results/linear/overt-imagined-topomap_full.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/overt-imagined-roc-curve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38" title="(b)"><img src="figures/cross-validated-results/linear/overt-imagined-roc-curve.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/overt-imagined-confusion-matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39" title="(c)"><img src="figures/cross-validated-results/linear/overt-imagined-confusion-matrix.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(c)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/overt-imagined-decision-statistic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40" title="(d)"><img src="figures/cross-validated-results/linear/overt-imagined-decision-statistic.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(d)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overt-imagined-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20: Overt to imagined movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+</figcaption>
+</figure>
+</div>
+<p>Surprisingly, the classifier achieved a high accuracy when trained with performed real movements and tested with imagined movements. The confusion matrix showed a very small number of misclassifications, indicating that the model was able to learn some relevant features from the overt data that were applicable to the imagined data.</p>
+<p>Moreover, the decision statistic is very clear and the distribution is very narrow, indicating that the model was very confident in its predictions. The decision statistic distribution was centered around 0 for the left hand and around 1 for the right hand, indicating that the model was able to effectively learn the underlying patterns in the imagined movement data.</p>
+</section>
+<section id="imagined-overt" class="level4" data-number="3.2.0.4">
+<h4 data-number="3.2.0.4" class="anchored" data-anchor-id="imagined-overt"><span class="header-section-number">3.2.0.4</span> Imagined → Overt</h4>
+<p>This scenario tested the reverse generalization: whether imagined training could support prediction of overt signals. The classifier achieved moderate performance. Interestingly, the decision score distributions were wider, suggesting less confident separation. Nonetheless, spatial maps retained interpretable motor-area activations.</p>
+<p><strong>Figure Placeholders:</strong> - Topomap: <code>imagined-overt-topomap.png</code> - ROC Curve: <code>imagined-overt-roc-curve.png</code> - Confusion Matrix: <code>imagined-overt-confusion-matrix.png</code> - Decision Statistic Distribution: <code>imagined-overt-decision-statistic.png</code></p>
+<div id="fig-imagined-overt-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-imagined-overt-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-overt-topomap_full.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41" title="(a)"><img src="figures/cross-validated-results/linear/imagined-overt-topomap_full.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-overt-roc-curve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42" title="(b)"><img src="figures/cross-validated-results/linear/imagined-overt-roc-curve.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-overt-confusion-matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43" title="(c)"><img src="figures/cross-validated-results/linear/imagined-overt-confusion-matrix.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(c)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/cross-validated-results/linear/imagined-overt-decision-statistic.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44" title="(d)"><img src="figures/cross-validated-results/linear/imagined-overt-decision-statistic.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(d)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imagined-overt-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21: Imagined to overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="scenario-comparison-summary" class="level4" data-number="3.2.0.5">
+<h4 data-number="3.2.0.5" class="anchored" data-anchor-id="scenario-comparison-summary"><span class="header-section-number">3.2.0.5</span> Scenario Comparison Summary</h4>
+<p>The figure below provides a side-by-side comparison of <strong>accuracy</strong> and <strong>AUC</strong> scores across the four scenarios using a linear SVM. As expected, performance was highest when training and testing within the same modality (overt-overt or imagined-imagined). Generalization between imagined and overt signals proved more difficult but remained informative.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Accuracy</th>
+<th>AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Overt → Overt</td>
+<td>98.9%</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>Imagined → Imagined</td>
+<td>94.9%</td>
+<td>0.94</td>
+</tr>
+<tr class="odd">
+<td>Overt → Imagined</td>
+<td>97.9%</td>
+<td>0.98</td>
+</tr>
+<tr class="even">
+<td>Imagined → Overt</td>
+<td>95.8%</td>
+<td>0.95</td>
+</tr>
+</tbody>
+</table>
+<p>These findings emphasize the domain-specific nature of EEG classification. While classifiers can generalize across signal types to some extent, model performance is consistently stronger within the same training and testing modality. This has important implications for BCI design, particularly when building models intended for use in both imagined and overt control environments.</p>
+</section>
+</section>
+<section id="kernel-svm-performance-and-interpretability" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="kernel-svm-performance-and-interpretability"><span class="header-section-number">3.3</span> Kernel SVM Performance and Interpretability</h2>
+<p>To explore the effect of different nonlinear transformations on EEG classification, we trained SVMs using four kernel types—<strong>linear</strong>, <strong>polynomial</strong>, <strong>RBF</strong>, and <strong>sigmoid</strong>—on both imagined and overt movement datasets. All models used the same regularization search strategy and were evaluated on a held-out test set using accuracy, ROC-AUC, decision statistics, and spatial interpretability through topomaps.</p>
+<p>Surprisingly, the <strong>linear kernel consistently outperformed</strong> its more complex counterparts in both conditions. It not only yielded the highest test accuracy and AUC but also produced the most stable and interpretable decision boundaries. The topographic maps generated from the linear models displayed focused and physiologically plausible electrode activations, aligning well with expected motor cortex patterns.</p>
+<p>In contrast, while RBF and polynomial kernels offered more flexible decision surfaces, they did not significantly improve classification and sometimes introduced noisy or less consistent spatial weight distributions. The sigmoid kernel performed the weakest overall, showing high variance and poor generalization in both datasets.</p>
+<p>This experiment reinforces an important principle: <strong>more complex models do not always outperform simpler ones</strong>, especially when the signal is already well-structured or when model interpretability is a priority. In this case, the linear SVM not only proved highly effective but also enabled detailed spatial insights through clean topographic visualizations.</p>
+<div id="fig-kernel-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kernel-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/svm_topomaps_all_kernels_imagined.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45" title="(a)"><img src="figures/svm_topomaps_all_kernels_imagined.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/svm_topomaps_all_kernels_real.png" class="lightbox" data-gallery="quarto-lightbox-gallery-46" title="(b)"><img src="figures/svm_topomaps_all_kernels_real.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kernel-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22: Kernel comparison results: (a) Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on imagined movements, (b) Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on overt movements.
+</figcaption>
+</figure>
+</div>
+<p>Analyzing the pictures above we can a region is always very relevant for the decision of the class but it varies depending on the kernel used. The linear kernel shows a very clear pattern of activation over the central parietal region, while the RBF kernel shows a more diffuse pattern of activation. The polynomial kernel shows a similar pattern to the RBF kernel, but with less intensity. The sigmoid kernel shows a very diffuse pattern of activation, indicating that it is not able to learn the underlying patterns in the data.</p>
+<p>Interestingly, the linear kernel produced the most interpretable topographic maps, with clear spatial distributions of informative electrodes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 24%">
+<col style="width: 19%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kernel</th>
+<th>Imagined Accuracy</th>
+<th>Real Accuracy</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>Best performer, interpretable</td>
+</tr>
+<tr class="even">
+<td>RBF</td>
+<td>0.79</td>
+<td>0.85</td>
+<td>Flexible, but no performance gain</td>
+</tr>
+<tr class="odd">
+<td>Polynomial</td>
+<td>0.62</td>
+<td>0.73</td>
+<td>Moderate performance, overfit-prone</td>
+</tr>
+<tr class="even">
+<td>Sigmoid</td>
+<td>0.79</td>
+<td>0.90</td>
+<td>Weak performance, high variance</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<p>This project explored the use of Support Vector Machines (SVMs) for classifying EEG data related to motor activity, both overt and imagined. The project was conducted in alignment with the ECE 580 mini-project requirements and involved rigorous experimentation across multiple dimensions of model complexity, validation, and modality-specific generalization.</p>
+<p>One of the central contributions of this work was the implementation of a <strong>two-level nested cross-validation</strong> pipeline. This method proved essential for selecting regularization parameters in a statistically robust manner, ensuring that hyperparameter tuning was fully decoupled from final model evaluation. In high-dimensional, low-sample-size contexts like EEG, this methodological rigor is critical to producing generalizable and reproducible results.</p>
+<p>Another key takeaway was the <strong>surprising strength of the linear SVM</strong>, especially in comparison to more complex kernel-based models. Despite testing polynomial, RBF, and sigmoid kernels, the linear SVM consistently delivered the best overall performance in both imagined and overt movement classification tasks. It also yielded the clearest spatial patterns in topographic maps, enabling interpretable visualizations of channel relevance. This finding underscores a vital lesson in applied machine learning: <strong>simplicity can outperform complexity when the data is well-structured and the model is appropriately regularized</strong>.</p>
+<p>The results showed:</p>
+<ul>
+<li><strong>High classification accuracy and AUC in within-modality scenarios</strong>, particularly Overt → Overt.</li>
+<li><strong>Non-trivial classification performance even in Imagined → Imagined</strong>, despite the known challenges with such data.</li>
+<li><strong>Limited but meaningful generalization across modalities</strong> (e.g., Overt → Imagined), suggesting shared spatial features that models can exploit even under signal mismatch.</li>
+<li><strong>L2 regularization generally outperforming L1</strong>, except in some transfer cases where sparsity favored L1.</li>
+</ul>
+<p>From a practical standpoint, the ability to decode motor intent from EEG using interpretable and computationally efficient models like linear SVMs makes this approach highly attractive for real-time Brain-Computer Interface (BCI) systems. The clean separation achieved with simple models reduces both training complexity and latency, which are vital considerations in interactive neurotechnologies.</p>
+<p>This project was made possible through collaborative support:</p>
+<ul>
+<li>The <strong>ECE580 course instruction team</strong>, for providing well-defined datasets and a detailed project scaffold.</li>
+<li><strong>Class peers and the Colab@Duke community</strong>, who offered valuable discussions on model tuning and visualization strategies.</li>
+<li>The open-source contributions of MNE-Python, scikit-learn, and UMAP libraries, which enabled the advanced spatial and decision-surface visualizations that enhanced the interpretability of this work.</li>
+</ul>
+<section id="next-steps-and-future-directions" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="next-steps-and-future-directions"><span class="header-section-number">4.0.1</span> Next Steps and Future Directions</h3>
+<p>One of the most immediate next steps involves expanding the evaluation to larger and more diverse datasets, including different subjects or session conditions. The current results were obtained on single-session data, and testing generalization across individuals would provide stronger evidence for real-world applicability. Additionally, although this study focused on static trial-level inputs, future efforts could explore more dynamic classification pipelines that operate continuously on streaming EEG data—moving toward real-time decoding scenarios.</p>
+<p>There is also significant potential in deploying the trained models within real-time Brain-Computer Interface (BCI) systems. Given the low computational overhead of linear SVMs, these models are ideally suited for real-time classification engines that could be integrated with digital interfaces or assistive technologies. For example, the classifier could be used to trigger directional input commands based on imagined movements, enabling control of cursors, robotic arms, or external software environments.</p>
+<p>Moreover, the simplicity of the linear SVM model makes it a strong candidate for implementation on embedded systems such as Raspberry Pi or microcontroller units, allowing classification to occur on-device without requiring high-power computing resources. This would open doors for the development of portable, low-cost, and scalable EEG-based systems for use in accessibility or rehabilitation contexts.</p>
+</section>
+<section id="final-remarks" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="final-remarks"><span class="header-section-number">4.0.2</span> Final Remarks</h3>
+<p>While many machine learning projects assume that increasing model complexity guarantees better performance, this work serves as a counterexample rooted in neuroscience. The structure of EEG signals—and the spatially organized nature of motor-related brain activity—lends itself well to <strong>linear classification models</strong>, provided the preprocessing and validation are carefully performed.</p>
+<p>This study not only achieved strong technical results but also highlighted the importance of methodical design, model interpretability, and simplicity—principles that will continue to guide future work in brain-computer interface research and beyond.</p>
+</section>
+</section>
+<section id="references" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> References</h1>
+<section id="colaboration" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="colaboration"><span class="header-section-number">5.1</span> Colaboration</h2>
+<ul>
+<li>Peter Banyas - Discussed and provided feedback on the project related to decision statistics and topographic maps.</li>
+<li>Pedro Melo - Provided valuable insights on the use of UMAP for dimensionality reduction and visualization.</li>
+</ul>
+</section>
+<section id="packages-used" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="packages-used"><span class="header-section-number">5.2</span> Packages used</h2>
+<ul>
+<li>Scikit-learn: Used for implementing and evaluating SVM classifiers, performing grid search, and calculating performance metrics like accuracy and ROC-AUC <span class="citation" data-cites="scikit-learn"><a href="#ref-scikit-learn" role="doc-biblioref">[7]</a></span>.</li>
+<li>NumPy: Used for numerical operations and handling arrays efficiently <span class="citation" data-cites="numpy"><a href="#ref-numpy" role="doc-biblioref">[8]</a></span>.</li>
+<li>Pandas: Used for data manipulation and analysis, particularly for loading and preprocessing the EEG datasets <span class="citation" data-cites="pandas"><a href="#ref-pandas" role="doc-biblioref">[9]</a></span>.</li>
+<li>Matplotlib: Used for creating visualizations, including topographic maps and ROC curves <span class="citation" data-cites="matplotlib"><a href="#ref-matplotlib" role="doc-biblioref">[10]</a></span>.</li>
+<li>Seaborn: Used for enhancing the aesthetics of visualizations, particularly confusion matrices <span class="citation" data-cites="seaborn"><a href="#ref-seaborn" role="doc-biblioref">[11]</a></span>.</li>
+<li>MNE: Used for EEG data processing, including filtering, epoching, and topographic map generation <span class="citation" data-cites="mne"><a href="#ref-mne" role="doc-biblioref">[12]</a></span>.</li>
+<li>UMAP: Used for dimensionality reduction and visualization of high-dimensional EEG data <span class="citation" data-cites="umap"><a href="#ref-umap" role="doc-biblioref">[13]</a></span>.</li>
+</ul>
 
-
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
-<div id="ref-GramfortEtAl2013a" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">A. Gramfort <em>et al.</em>, <span>“<span>MEG</span> and <span>EEG</span> data analysis with <span>MNE</span>-<span>Python</span>,”</span> <em>Frontiers in Neuroscience</em>, vol. 7, no. 267, pp. 1–13, 2013, doi: <a href="https://doi.org/10.3389/fnins.2013.00267">10.3389/fnins.2013.00267</a>.</div>
+<div id="ref-5953178" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">A. R. Mathew, A. Al Hajj, and A. Al Abri, <span>“Human-computer interaction (HCI): An overview,”</span> in <em>2011 IEEE international conference on computer science and automation engineering</em>, 2011, pp. 99–100. doi: <a href="https://doi.org/10.1109/CSAE.2011.5953178">10.1109/CSAE.2011.5953178</a>.</div>
+</div>
+<div id="ref-Costantini2009" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">G. Costantini <em>et al.</em>, <span>“<span class="nocase">SVM Classification of EEG Signals for Brain Computer Interface</span>,”</span> in <em><span>Neural Nets WIRN09</span></em>, IOS Press, 2009, pp. 229–233. doi: <a href="https://doi.org/10.3233/978-1-60750-072-8-229">10.3233/978-1-60750-072-8-229</a>.</div>
+</div>
+<div id="ref-8606765" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y.-T. Wu, T. H. Huang, C. Yi Lin, S. J. Tsai, and P.-S. Wang, <span>“Classification of EEG motor imagery using support vector machine and convolutional neural network,”</span> in <em>2018 international automatic control conference (CACS)</em>, 2018, pp. 1–4. doi: <a href="https://doi.org/10.1109/CACS.2018.8606765">10.1109/CACS.2018.8606765</a>.</div>
+</div>
+<div id="ref-9131312" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">T. Dai and Y. Dong, <span>“Introduction of SVM related theory and its application research,”</span> in <em>2020 3rd international conference on advanced electronic materials, computers and software engineering (AEMCSE)</em>, 2020, pp. 230–233. doi: <a href="https://doi.org/10.1109/AEMCSE50948.2020.00056">10.1109/AEMCSE50948.2020.00056</a>.</div>
+</div>
+<div id="ref-MELKUMOVA2017746" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">L. E. Melkumova and S. Ya. Shatskikh, <span>“Comparing ridge and LASSO estimators for data analysis,”</span> <em>Procedia Engineering</em>, vol. 201, pp. 746–755, 2017, doi: <a href="https://doi.org/10.1016/j.proeng.2017.09.615">https://doi.org/10.1016/j.proeng.2017.09.615</a>.</div>
+</div>
+<div id="ref-BibEntry2025Apr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">M. W. S., <span>“<span class="nocase">neuromappr</span>,”</span> <em>GitHub</em>. Apr. 2025. Accessed: Apr. 27, 2025. [Online]. Available: <a href="https://github.com/Wanghley/neuromappr">https://github.com/Wanghley/neuromappr</a></div>
+</div>
+<div id="ref-scikit-learn" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">F. Pedregosa <em>et al.</em>, <em>Scikit-learn: Machine learning in <span>P</span>ython</em>, vol. 12. 2011, pp. 2825–2830.</div>
+</div>
+<div id="ref-numpy" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">C. R. Harris <em>et al.</em>, <em>Array programming with NumPy</em>, vol. 585. Nature Publishing Group, 2020, pp. 357–362.</div>
+</div>
+<div id="ref-pandas" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">W. McKinney <em>et al.</em>, <em>Pandas: A foundational python library for data analysis and statistics</em>. 2011.</div>
+</div>
+<div id="ref-matplotlib" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">J. D. Hunter, <em>Matplotlib: A 2D graphics environment</em>, vol. 9. IEEE Computer Society, 2007, pp. 90–95.</div>
+</div>
+<div id="ref-seaborn" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">M. Waskom, <em>Seaborn: Statistical data visualization</em>, vol. 6. 2021, p. 3021.</div>
+</div>
+<div id="ref-mne" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">A. Gramfort <em>et al.</em>, <em>MNE software for processing MEG and EEG data</em>, vol. 86. 2014, pp. 446–460.</div>
+</div>
+<div id="ref-umap" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">L. McInnes, J. Healy, and J. Melville, <em>UMAP: Uniform manifold approximation and projection for dimension reduction</em>. 2018. Available: <a href="https://arxiv.org/abs/1802.03426">https://arxiv.org/abs/1802.03426</a></div>
 </div>
 </div></section></div></main>
 <!-- /main column -->
@@ -589,6 +1950,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

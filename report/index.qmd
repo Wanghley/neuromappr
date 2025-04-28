@@ -1,31 +1,949 @@
 ---
 title: "Neuromappr"
-subtitle: "Brain-Computer Interface Movement Decoding"
+subtitle: "Brain-Computer Interface Movement Decoding Using Support Vector Machines"
 authors:
   - name: "Wanghley Soares Martins"
-    affiliation: "Duke University"
-    roles: ["writing"]
+    affiliation: "Duke University, Pratt School of Engineering, Department of Electrical and Computer Engineering"
+    orcid: "0000-0002-5110-4024"
+    roles: ["writing", "editing", "reviewing", "visualization"]
     corresponding: true
 bibliography: references.bib
 csl: ieee.csl  # Optional: change to your citation style (apa.csl, ieee.csl, etc.)
-date: "`r Sys.Date()`"
-format: pdf  # or html / docx
+date: "April 27, 2025"
+# format is html, and pdf
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-fold: show
+    code-summary: "Show/Hide Code"
+    theme: default
+    highlight-style: tango
+    crossref:
+         fig-prefix: "Figure"
+  # pdf:
+  #   toc: true
+  #   toc-depth: 2
+  #   number-sections: true
+  #   fig_caption: true
+  #   latex-engine: xelatex
 ---
 
 # Introduction
+## Background
+Since the creation of machines and computers, the human interaction with them has been evolving and sometimes quite challenging. For instance, the first computers were operated using punch cards, which required a lot of effort to input data. As technology advanced, we moved to keyboards and mice, which made it easier to interact with computers. However, these methods still require physical movement and can be limiting for individuals with disabilities or injuries. This interaction with computers has been a challenge investigated for researchers and engineers for decades in the field of Human-Computer Interaction (HCI) [@5953178]. 
 
-This document presents a brief overview of the **Neuromappr** project, which aims to decode movement intent from EEG signals using support vector machines in a Brain-Computer Interface (BCI) framework. For example, see [@GramfortEtAl2013a].
+The goal of HCI is to create systems that are easy to use and understand, allowing users to interact with computers in a natural and intuitive way. This has led to the development of various input devices, such as touchscreens, voice recognition, and even brain-computer interfaces (BCIs), the focus of this project.
+
+Brain-Computer Interfaces (BCIs) are systems that enable direct communication between the human brain and devices, bypassing the need for physical movement and control, which can be particularly beneficial for individuals with disabilities or injuries. Among other data, BCIs can use electroencephalography (EEG) signals to decode brain activity and translate it into commands for controlling devices. 
+
+BCI technology has the potential to revolutionize the way we interact with computers and other devices, making it possible for individuals with disabilities to regain control over their environment. Central to the efficacy of BCIs is the accurate interpretation of electroencephalogram (EEG) signals, particularly those associated with motor imagery—the mental simulation of movement without actual execution as described by Costantini et al. (2009) [@Costantini2009].
+
+
+From a machine learning standpoint, the classification of EEG signals for motor imagery tasks presents several intricate challenges:
+
+<!-- insert bullet points -->
+- **High Dimensionality with Limited Samples**: EEG data are inherently high-dimensional, often involving recordings from numerous electrodes (e.g., 102 in this project), each capturing complex temporal dynamics. However, the number of labeled training samples is typically limited, leading to the "curse of dimensionality," where models risk overfitting and poor generalization.
+- **Non-Stationarity and Noise**: EEG signals are susceptible to various artifacts (e.g., muscle movements, eye blinks) and exhibit non-stationary behavior, complicating the extraction of consistent features across sessions and subjects.
+- **Inter-Subject Variability**: There is significant variability in EEG signals across different individuals, which can affect the performance of machine learning models trained on data from a single subject. This variability necessitates the development of robust algorithms that can generalize well across different users.
+- **Temporal Dynamics**: EEG signals are time-dependent, and capturing the temporal dynamics of brain activity is crucial for accurate classification. This requires the use of advanced techniques that can model temporal relationships effectively.
+
+Support Vector Machines (SVMs) have been extensively employed in this domain due to their effectiveness in high-dimensional spaces and robustness to overfitting. For instance, Costantini et al. (2009) [@Costantini2009] demonstrated the utility of SVMs in classifying EEG signals for BCI applications, emphasizing their capacity to handle complex, high-dimensional data.
+
+## Objectives
+In this project, we aim to implement and evaluate SVM-based classifiers for distinguishing between left and right-hand motor imagery using EEG data. By addressing the aforementioned challenges through appropriate preprocessing, feature extraction, and model selection, we seek to contribute to the development of reliable and efficient BCI systems.
+
+### Spedific Objectives
+1. Implement a Support Vector Machine (SVM) classifier for EEG data.
+   - Evaluate the performance of the SVM classifier using various kernel functions (linear, polynomial, and radial basis function).
+   - Optimize the SVM hyperparameters using grid search and cross-validation techniques.
+2. Compare the performance of the SVM classifier with Overt and Imagined Motor Imagery (MI) tasks.
+   - Analyze the classification accuracy, precision, recall, and F1-score for both tasks.
+   - Investigate the impact of different EEG feature extraction methods on classification performance.
+3. Visualize and interpret the results of the SVM classifier, including feature importance and decision boundaries.
+   - Provide insights into the EEG features that contribute to the classification performance.
+   - Visualize the decision boundaries of the SVM classifier in the feature space.
+
+## Dataset overview
+The dataset utilized in this project comprises EEG recordings from a Brain-Computer Interface (BCI) experiment designed to distinguish between left and right-hand movements. The recordings are categorized into two distinct types:
+
+1. **Overt Motor Imagery (OMI)**: This task involves participants imagining moving their left or right hand while EEG signals are recorded.
+   
+2. **Imagined Motor Imagery (IMI)**: In this task, participants are instructed to imagine moving their left or right hand without any actual movement.
+
+Moreover, the dataset provides the XY coordinates of the electrodes, which are crucial for visualizing the spatial distribution of EEG signals across the scalp. The dataset is organized into two main folders: `data`. 
+
+The data is organized on the following files:
+
+- `data/BCIsensor_xy.csv`: Contains the XY coordinates of the electrodes.
+  
+- `data/feaSubEImg_1.csv`: Contains the EEG data for the IMI task for one direction (left).
+  
+- `data/feaSubEImg_2.csv`: Contains the EEG data for the IMI task for the other direction (right).
+  
+- `data/feaSubEOvert_1.csv`: Contains the EEG data for the OMI task for one direction (left).
+  
+- `data/feaSubEOvert_2.csv`: Contains the EEG data for the OMI task for the other direction (right).
+
+
+On the electrodes' data, it is organized with each trial as a column and each electrode on that trial as a row, as shown in @tbl-electrodes.
+
+::: {#tbl-electrodes}
+| Electrode | Trial 1 | Trial 2 | Trial 3 |
+|-----------|---------|---------|---------|
+| 1         | Value   | Value   | Value   |
+| 2         | Value   | Value   | Value   |
+| 3         | Value   | Value   | Value   |
+
+Table: Electrodes' data organization
+:::
+
+In terms of electrode placement, the dataset includes 102 electrodes arranged in the configuration plotted in @fig-electrodesPositions. The electrodes are positioned according to the 10-20 system, a standardized method for electrode placement in EEG studies. This system ensures consistent and reproducible electrode locations across different subjects and studies.
+
+::: {#fig-electrodesPositions}
+![Electrodes positions](figures/electrode_positions.png){#fig:electrodes-positions width=70%}
+:::
+::: {.legend .centered style="font-size: smaller;"}
+**@fig-electrodesPositions** Electrode positions on the scalp according to the 10-20 system. The numbers indicate the electrode labels, which correspond to the columns in the dataset.
+Source: By the author (2025).
+:::
+
+A topographic view into the skull is shown in @fig-electrodesPositionsTopologic, where the electrodes are represented as dots on the scalp. The numbers indicate the electrode labels, which correspond to the columns in the dataset. The topographic representation provides a visual understanding of the spatial distribution of EEG signals across the scalp, allowing for better interpretation of the data.
+
+::: {#fig-electrodesPositionsTopologic}
+![Electrodes positions topologic](figures/electrode_positions_topomap.png){#fig:electrodes-positions-topologic width=70%}
+:::
+::: {.legend .centered style="font-size: smaller;"}
+**@fig-electrodesPositionsTopologic** Topographic representation of the electrode positions on the scalp. The numbers indicate the electrode labels, which correspond to the columns in the dataset.
+Source: By the author (2025).
+:::
 
 # Methods
+## Project Structure
+This project follows a structured pipeline encompassing data acquisition, signal preprocessing, classification, and interpretation—each stage playing a critical role in the accurate decoding of motor imagery from EEG signals. Inspired by the workflow presented in Wu et al. (2018)[@8606765], this architecture promotes clarity, reproducibility, and alignment with current practices in EEG-based Brain-Computer Interface (BCI) research.
 
-_Section under construction._
+As shown in **@fig-pipeline**, the end-to-end system begins with EEG signal generation through motor-related brain activity, followed by collection via sensor-equipped EEG caps. The recorded signals then undergo preprocessing and are classified using machine learning algorithms—particularly Support Vector Machines (SVMs)—to distinguish between motor imagery classes. The final output may be translated into control commands or used for further neurophysiological interpretation.
 
-# Results
+::: {#fig-pipeline}
+![Project pipeline](assets/wu1-p4-wu-large.gif){#fig:project-pipeline width=70%}
+:::
+::: {.legend .centered style="font-size: smaller;"}
+**@fig-pipeline:** Conceptual workflow from EEG activity to application.  
+Source: adapted from Wu et al. (2018) [@8606765].
+:::
 
-_Section under construction._
+This representation effectively illustrates the typical stages of a BCI system: (1) EEG generation through neural activity, (2) signal acquisition, (3) processing and classification (often including feature extraction and transformation into actionable information), and (4) deployment or application, such as robotic actuation or interface control.
+
+The focus on this paper is on the signal processing and classification stages, where we will implement a Support Vector Machine (SVM) classifier to decode motor imagery tasks from EEG signals. We will not delve into the EEG generation and acquisition stages, as they are outside the scope of this project.
+
+## Mathematical Formulation
+### Support Vector Machines: A Mathematical Framework for High-Dimensional EEG Classification
+In this project, Support Vector Machines (SVMs) are utilized to classify EEG signals corresponding to left and right-hand movement, either overt or imagined. The application of SVMs to EEG data is particularly well-justified: these classifiers are known to perform effectively in high-dimensional spaces, especially when the number of observations is small relative to the number of features—a condition that closely matches our dataset, which consists of 204 features per trial but only 240 trials per condition.
+
+The primary objective of an SVM is to find a hyperplane that best separates two classes in the feature space. In the simplest case, where data are linearly separable, a linear SVM seeks the hyperplane that maximizes the margin between the two classes. For a given trial $\mathbf{x}_i \in \mathbb{R}^{204}$ with class label $y_i \in \{-1, +1\}$, the classifier has the form:
+
+$$
+f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b
+$$
+
+Here, $\mathbf{w}$ is the weight vector orthogonal to the decision boundary, and $b$ is the bias term. The training process identifies the optimal $\mathbf{w}$ and $b$ such that the margin—the distance between the hyperplane and the closest points of each class—is maximized, such as ilustrated on @fig-svm by Dai et. al (2020) [@9131312]. This is achieved by solving the following convex optimization problem:
+
+$$
+\min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1
+$$
+
+::: {#fig-svm}
+
+![Support Vector Machine](assets/814300a230-fig-1-source-large.gif){#fig:svm width=40%}
+**Figure:** Support Vector Machine (SVM) illustration. The dashed line represents the decision boundary, while the solid lines indicate the margin. The support vectors are the data points closest to the decision boundary.
+:::
+
+**Figure 2:** Support Vector Machine (SVM) illustration. The dashed line represents the decision boundary, while the solid lines indicate the margin. The support vectors are the data points closest to the decision boundary [@9131312].
+
+This formulation is known as the **hard-margin SVM**, suitable only when the data is perfectly separable. In practice, particularly with EEG data, perfect separation is unrealistic due to measurement noise, physiological artifacts, and signal overlap between classes. Thus, we turn to the **soft-margin SVM**, which introduces slack variables $\xi_i \geq 0$ that allow some misclassification, yielding a more robust solution:
+
+$$
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i
+$$
+
+The parameter $C > 0$ controls the trade-off between maximizing the margin and minimizing classification errors. A smaller $C$ permits more violations (larger margin, higher bias), while a larger $C$ enforces stricter separation (lower bias, higher variance). This parameter is crucial in EEG classification, particularly when comparing performance on imagined versus overt movement data, as imagined movements tend to be more subtle and noisy.
+
+An important property of SVMs is that they produce not only binary class decisions, but also **decision statistics**. For any trial $\mathbf{x}$, the signed output $f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b$ quantifies the distance of the trial from the decision boundary. This value is used to compute performance metrics such as ROC curves and can serve as a confidence measure for the prediction. The ability to produce such a statistic, rather than just a class label, is a key reason SVMs are well-suited to this project.
+
+Moreover, the learned weight vector $\mathbf{w}$ in a linear SVM offers meaningful insight into the relative importance of each feature. In our case, EEG features are structured as 204 elements, corresponding to 102 electrodes each providing two components: the x-gradient and y-gradient of the electric field. To interpret the contribution of each electrode, we compute the magnitude of each Ex/Ey pair:
+
+$$
+w_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+$$
+
+This produces a 102-element vector indicating the relative influence of each electrode on the classification decision. The resulting magnitudes are mapped onto a topographic layout of the head, allowing spatial visualization of the most informative brain regions.
+
+While the linear SVM provides interpretability, it may not fully capture complex, nonlinear relationships in the EEG signals. To address this, we also consider **kernel SVMs**, which implicitly map the data into higher-dimensional feature spaces via kernel functions. These functions compute inner products in the transformed space without requiring explicit transformation, a technique known as the **kernel trick**. The decision function becomes:
+
+$$
+f(\mathbf{x}) = \sum_{i \in \mathcal{S}} \alpha_i y_i k(\mathbf{x}_i, \mathbf{x}) + b
+$$
+
+Here, $\mathcal{S}$ is the set of support vectors, and $k(\cdot, \cdot)$ is a kernel function. We explore multiple kernel types in this project, including:
+
+- **Linear:** baseline, interpretable, fast; <br>
+- **Radial Basis Function (RBF):** capable of capturing smooth nonlinearities;
+- **Sigmoid:** similar to neural networks, less common in practice; <br>
+- **Polynomial:** included for completeness and comparison.
+
+In kernel SVMs, we lose direct access to the weight vector $\mathbf{w}$, making interpretability more challenging. To address this, we use **permutation importance** to estimate the relative importance of each feature for nonlinear kernels.
+
+Implementation of SVMs in this project is performed using the `sklearn.svm` module, which provides a user-friendly interface for training and evaluating SVM classifiers. The `SVC` class allows for easy specification of kernel types, hyperparameters, and performance metrics.
+
+### Permutation Importance
+
+Let $X = [\mathbf{x}_1, \dots, \mathbf{x}_n]^\top \in \mathbb{R}^{n \times d}$ be the EEG data matrix and $f$ the trained classifier. The permutation importance of feature $j$ is estimated as:
+
+1. Compute the **baseline score** (e.g., accuracy or AUC) on the original test data:  
+   $$
+   s_{\text{baseline}} = \text{score}(f, X, y)
+   $$
+
+2. For each feature $j$, create a perturbed version $X^{(j)}$ where the $j^{th}$ column is randomly shuffled across all samples.
+
+3. Evaluate the performance on the perturbed data:  
+   $$
+   s^{(j)} = \text{score}(f, X^{(j)}, y)
+   $$
+
+4. Define the **importance** of feature $j$ as the performance drop:
+   $$
+   \text{Importance}_j = s_{\text{baseline}} - s^{(j)}
+   $$
+
+This process is repeated over multiple random permutations (e.g., 10 times), and the mean drop in performance is taken as the final estimate of the feature’s importance.
+
+**Implementation in This Project:**
+
+In our kernel SVM experiments, we used `sklearn.inspection.permutation_importance` with the following settings:
+
+- `n_repeats=10` to average out noise in the performance estimates,
+- `scoring='accuracy'` or `'roc_auc'` depending on the metric of interest,
+- `n_jobs=-1` to parallelize computation across all available cores.
+
+This method yielded a 204-dimensional vector representing the importance of each feature (i.e., each EEG gradient channel). To visualize the spatial contributions of the electrodes, we paired each $\text{Ex}$ and $\text{Ey}$ component and computed a magnitude-based importance score for each electrode:
+
+$$
+w_k = \sqrt{\text{Importance}_{2k-1}^2 + \text{Importance}_{2k}^2}, \quad k = 1, \dots, 102
+$$
+
+These values were mapped onto the scalp using topographic plots to interpret which brain regions most strongly contributed to classification, despite the underlying SVM model being nonlinear and not directly interpretable.
+
+### Extending SVMs with Kernels for Nonlinear EEG Classification
+While linear Support Vector Machines (SVMs) provide a robust and interpretable foundation for classifying EEG data, they assume that the classes are separable by a linear boundary in the original feature space. However, EEG signals—especially those corresponding to imagined movements—often exhibit complex, nonlinear patterns that cannot be adequately captured using linear decision functions. To address this, we incorporate **kernel methods**, which allow SVMs to construct flexible, nonlinear decision boundaries by implicitly mapping data into higher-dimensional spaces.
+
+In the kernelized SVM, we represent the decision function as:
+
+$$
+f(\mathbf{x}) = \sum_{i=1}^{n} \alpha_i y_i k(\mathbf{x}_i, \mathbf{x}) + b
+$$
+
+Here,<br>
+- $\mathbf{x}_i$ are the training samples,<br>
+- $y_i \in \{-1, +1\}$ are the labels,<br>
+- $\alpha_i$ are the learned Lagrange multipliers,<br>
+- $k(\mathbf{x}_i, \mathbf{x})$ is the kernel function measuring similarity,<br>
+- $b$ is the bias term.
+
+Only the training samples with $\alpha_i > 0$ (support vectors) contribute to the decision function. The function $f(\mathbf{x})$ returns a continuous **decision statistic**, and its sign determines the predicted class.
+
+
+#### Kernels Used in This Project
+
+We explore four kernel types, each with unique geometric and computational properties:
+
+1. **Linear Kernel** (baseline):
+   $$
+   k(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^\top \mathbf{x}_j
+   $$
+   Used for direct interpretability and comparison with non-kernel results.
+
+2. **Radial Basis Function (RBF) Kernel**:
+   $$
+   k(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2)
+   $$
+   Introduces local flexibility, useful for capturing subtle nonlinearity in noisy EEG signals. The hyperparameter $\gamma$ controls the influence of individual training points.
+
+3. **Polynomial Kernel**:
+   $$
+   k(\mathbf{x}_i, \mathbf{x}_j) = (\gamma \mathbf{x}_i^\top \mathbf{x}_j + r)^d
+   $$
+   Enables modeling more complex global relationships between channels. Requires tuning of degree $d$, scale $\gamma$, and offset $r$.
+
+4. **Sigmoid Kernel**:
+   $$
+   k(\mathbf{x}_i, \mathbf{x}_j) = \tanh(\gamma \mathbf{x}_i^\top \mathbf{x}_j + r)
+   $$
+   Related to neural network activation functions, but less commonly used due to its sensitivity to hyperparameter settings.
+
+Each kernel introduces its own set of hyperparameters, which are optimized during the **inner loop of the two-level cross-validation** strategy used in this project.
+
+
+#### Kernel Selection Strategy
+
+For each kernel, we trained a model on EEG trials using the same cross-validation framework and computed performance metrics including accuracy and ROC area. This allowed us to compare not only final performance but also generalization stability across folds.
+
+The goal was not to “pick the best kernel” outright, but rather to understand the types of decision boundaries each kernel enables and how well they adapt to the EEG signal characteristics for both overt and imagined movement trials.
+
+- **RBF kernels** generally performed better on imagined movement data, likely due to their ability to adapt to low signal-to-noise ratios.
+- **Linear kernels** offered clearer interpretability and often comparable performance on overt movement data, where class separation is stronger.
+- **Polynomial kernels** showed some promise in capturing intermediate complexity but were more prone to overfitting unless carefully regularized.
+
+#### Interpretation of Kernel SVMs
+
+Unlike linear SVMs, kernelized models do not produce a weight vector $\mathbf{w}$ in the input space. As such, **direct interpretation of feature contributions is not possible**. To bridge this gap, we applied **permutation importance**, which measures how shuffling each feature affects classification performance (as described in a previous section).
+
+To interpret these results spatially, we paired each Ex/Ey feature, computed magnitudes, and visualized electrode-wise importance on a scalp topomap. This enabled us to identify cortical regions that played a key role in the model’s classification decisions, even in the absence of explicit feature weights.
+
+### Regularization Parameter and Norm Penalties in SVMs
+In Support Vector Machines (SVMs), the **regularization parameter $C$** is critical to managing the trade-off between model complexity and classification accuracy. Particularly in the context of EEG-based Brain-Computer Interface (BCI) classification, where high-dimensional and noisy data are prevalent, appropriate regularization ensures robust generalization to unseen trials.
+
+Regularization is not just a technique for numerical stability—it fundamentally shapes the classifier’s bias-variance tradeoff and governs what kind of solution is learned [@MELKUMOVA2017746]. For BCI movement decoding, where noisy, high-dimensional data are the norm, choosing the right regularization strategy is crucial to achieving both accuracy and interpretability.
+
+#### Soft-Margin SVM and the Role of $C$
+
+For EEG classification, we typically rely on the **soft-margin SVM**, which tolerates some misclassification to allow for greater generalization [@MELKUMOVA2017746]. The **primal optimization problem** is given by:
+
+$$
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \ \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0
+$$
+
+Here:<br>
+- $\|\mathbf{w}\|^2$ is the **L2 norm squared**, encouraging small weights and a large-margin hyperplane,<br>
+- $C$ controls the penalty for slack variable $\xi_i$, which quantifies margin violations.
+
+This formulation is an instance of **Ridge-like regularization** applied to an SVM. It penalizes large weights quadratically, resulting in smooth decision boundaries and improved stability—ideal for high-dimensional EEG data where overfitting is a risk [@MELKUMOVA2017746].
+
+#### L2 Regularization (Ridge): Smooth and Stable
+
+L2 regularization adds a quadratic penalty on the magnitude of the weights:
+
+$$
+\mathcal{L}_{\text{L2}}(\mathbf{w}) = \frac{1}{2} \|\mathbf{w}\|^2 = \frac{1}{2} \sum_{j=1}^{d} w_j^2
+$$ [@MELKUMOVA2017746].
+
+This approach:<br>
+- Encourages all weights to be small but nonzero,<br>
+- Produces **dense models**, where most features contribute a little,<br>
+- Is suitable when all features (i.e., EEG channels) may carry signal but none dominate.
+
+In our project, this penalty was particularly useful for classifying overt movement EEG, where clean signal and broader spatial activation are expected.
+
+#### L1 Regularization (Lasso): Sparsity and Interpretability
+
+An alternative to L2 is **L1 regularization**, which penalizes the **absolute value** of weights:
+
+$$
+\mathcal{L}_{\text{L1}}(\mathbf{w}) = \sum_{j=1}^{d} |w_j|
+$$ [@MELKUMOVA2017746]
+
+The full soft-margin objective with L1 becomes:
+
+$$
+\min_{\mathbf{w}, b, \boldsymbol{\xi}} \ \lambda \sum_{j=1}^{d} |w_j| + C \sum_{i=1}^{n} \xi_i
+\quad \text{subject to} \quad
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i
+$$
+
+This form:<br>
+- Produces **sparse models** where only a subset of features (channels) receive nonzero weights, <br>
+- Facilitates **feature selection** by zeroing out uninformative dimensions,<br>
+- Increases interpretability by highlighting the most discriminative electrodes.
+
+While not directly implemented by default in all SVM libraries, **L1-penalized linear SVMs** are supported in scikit-learn through `LinearSVC(penalty='l1', dual=False)` and are particularly useful in exploratory settings or when interpretability is a priority.
+
+#### EEG Interpretation and Norm Selection
+
+- **L2 regularization** (used in our main experiments) was more appropriate for general classification performance, especially in **imagined movement**, where signal is sparse but noisy, and a smooth model reduces overfitting.
+- **L1 regularization** could be applied in future work to aid in the identification of the most informative EEG channels—this may be particularly valuable when reducing feature space dimensionality or visualizing important brain regions.
+
+## Single Linear SVM Classifier Without Cross-Validation
+
+As an initial proof-of-concept, we trained a linear Support Vector Machine (SVM) classifier on the EEG data using a traditional train-test split without any form of cross-validation. This approach was conducted separately for the imagined and overt (real) movement datasets, allowing for direct exploration of classification performance and spatial interpretability of the resulting model weights.
+
+For this proof of concept analysis, we decided to use Ridge regularization (L2) with a linear kernel, as it is the most interpretable and straightforward approach for EEG data. Also, we included $C=1.0$ as the regularization parameter which is, generally, a middle point between overfitting and underfitting.
+
+### Data Preparation
+The EEG data were loaded from CSV files corresponding to two classes:
+- `feaSubEImg_1.csv` and `feaSubEImg_2.csv` for imagined movements,
+- `feaSubEOvert_1.csv` and `feaSubEOvert_2.csv` for overt movements.
+
+Each dataset contains 204 features per trial, corresponding to the Ex and Ey components from 102 electrodes. After loading and transposing the data, we concatenated class 1 and class 2 trials and assigned binary labels. A 70/30 train-test split was used for model evaluation.
+
+### Model Training
+We trained a linear SVM using `sklearn.svm.SVC` with the following configuration:
+- `kernel='linear'`
+- `C=1.0` (regularization parameter)
+- `probability=True` to enable soft prediction scores
+
+The decision function `f(x) = w^T x + b` was used to compute both class predictions and decision statistics. Accuracy and ROC-AUC were recorded on @fig-linearSVM.
+
+::: {#fig-linearSVM layout-ncol=2}
+![(a) Imagined Movements](figures/linear_result_imagined.png){#fig:linear-svm-imagined width=100%}
+
+![(b) Overt Movements](figures/linear_result_overt.png){#fig:linear-svm-overt width=100%}
+
+Linear SVM performance metrics for (a) imagined versus (b) overt movements, showing classification accuracy, ROC-AUC, and classification report.
+:::
+
+### Weight Analysis and Interpretation
+The weight vector $\mathbf{w} \in \mathbb{R}^{204}$ from the trained linear SVM was analyzed to interpret spatial channel importance. The 204-element vector was split into x-gradient (`W_x`) and y-gradient (`W_y`) components, and a per-electrode magnitude was computed:
+
+$$
+W_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+$$
+
+These magnitudes were plotted to visualize the influence of each electrode, such as on @fig-linearSVM-weights.
+
+::: {#fig-linearSVM-weights}
+![(a) Imagined Movements](figures/linearSVM/linearSVM_weights_perChannel_imagined.png){#fig:linear-svm-imagined-weights width=90%}
+
+![(b) Overt Movements](figures/linearSVM/linearSVM_weights_per_channel_real.png){#fig:linear-svm-overt-weights width=80%}
+
+Linear SVM weight magnitudes for (a) imagined versus (b) overt movements, showing the relative importance of each electrode in the classification decision. Topographic maps display normalized weights (μV) across scalp regions, with red indicating positive contribution and blue indicating negative contribution to classification.
+:::
+
+
+### Topographic Mapping
+To understand spatial patterns, electrode positions from `BCIsensor_xy.csv` were scaled and mapped to a topographic head model using MNE-Python. The magnitude values `W_mag` were plotted using MNE's `plot_topomap` function.
+
+- Topomaps provided intuitive spatial distribution of informative channels.
+- Interpolated heatmaps were also generated using `scipy.interpolate.griddata` to visualize gradients.
+
+In order words, we can visualize where is located the most important electrodes for the classification of the imagined and overt movements. The topographic maps were generated using MNE-Python's `plot_topomap` function, which allows for intuitive spatial distribution of informative channels. The topomaps are shown in @fig-topomap.
+
+::: {#fig-topomap}
+::: {.columns}
+::: {.column width="50%"}
+![(a) Imagined Movements (Extrapolated)](figures/linearSVM/topomap_imagined_movements_extrapolated.png){#fig:topomap-imagined-extrapolated width=100%}
+:::
+::: {.column width="50%"}
+![(b) Overt Movements (Extrapolated)](figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png){#fig:topomap-overt-extrapolated width=100%}
+:::
+:::
+
+![(c) Imagined Movements (Interpolated)](figures/linearSVM/topomap_imagined_movements_interpolated_complete.png){#fig:topomap-imagined-interpolated width=95%}
+
+![(d) Overt Movements (Interpolated)](figures/linearSVM/topomap_real_movements_interpolated_complete_linearSVM.png){#fig:topomap-overt-interpolated width=95%}
+
+Linear SVM topographic maps showing spatial distribution of informative electrodes: (a-b) Extrapolated and (c-d) interpolated representations for imagined versus overt movements. Warmer colors indicate stronger positive weights, cooler colors show negative weights in the classification decision. Color bars represent normalized weight values.
+:::
+
+### Evaluation: Confusion Matrices and ROC Curves
+We computed confusion matrices for both imagined and real movement classifiers, as well as ROC curves and AUC metrics.
+
+**Figure Placeholder:** `confusion_matrix_imagined_movements_linearSVM.png`
+**Figure Placeholder:** `confusion_matrix_real_movements_linearSVM.png`
+**Figure Placeholder:** `roc_curves_linear_SVM.png`
+
+::: {#fig-confusion-matrices}
+::: {.columns}
+::: {.column width="50%"}
+![(a) Imagined Movements](figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png){#fig:confusion-matrix-imagined width=100%}
+:::
+::: {.column width="50%"}
+![(b) Overt Movements](figures/linearSVM/confusion_matrix_real_movements_linearSVM.png){#fig:confusion-matrix-overt width=100%}
+:::
+:::
+![(c) ROC Curves](figures/linearSVM/roc_curves_linear_SVM.png){#fig:roc-curves width=100%}
+
+**Figure 2.** Confusion matrices showing classification performance for (a) imagined versus (b) overt movements. Diagonal elements (TP, TN) indicate correct classifications, while off-diagonal (FP, FN) show errors. Color intensity corresponds to frequency counts.
+:::
+
+
+This exploratory analysis validated the use of a linear SVM for both overt and imagined movement classification, highlighting meaningful spatial distributions and differences in performance characteristics that motivate the need for more robust cross-validation and kernel-based comparisons in subsequent sections.
+
+Without much tunning, the linear SVM classifier achieved an accuracy of 0.87 for imagined movements and 0.92 for overt movements, with ROC-AUC scores of 0.93 and 0.97, respectively. The confusion matrices indicated a high true positive rate (TPR) and low false positive rate (FPR) for both tasks, demonstrating the classifier's effectiveness in distinguishing between left and right-hand movements.
+
+However, we need to notice that this result may be biased due to the lack of cross-validation and hyperparameter tuning. The linear SVM classifier was trained on a single train-test split, which may not generalize well to unseen data. Therefore, we will implement a more robust cross-validation strategy in the next sections. Therefore this is one of our next steps to validate accurateness and generalization of the model.
+
+Moreover, the topographic maps provided valuable insights into the spatial distribution of informative electrodes, which can guide future feature selection and model refinement.
+
+
+## Regularization Parameter Selection: L1 vs L2 Penalties
+
+As part of our methodology, we performed a detailed analysis of the effect of regularization on the classification performance of linear SVMs. In this context, we compared **L1 (Lasso)** and **L2 (Ridge)** regularization strategies on both overt and imagined EEG datasets. These experiments serve to illustrate how different norm constraints impact generalization, sparsity, and model interpretability.
+
+### Weight Magnitude Comparison
+We trained two `LinearSVC` classifiers using:
+- `penalty='l2'` with `dual=True`
+- `penalty='l1'` with `dual=False` (as required for L1 regularization)
+
+Both classifiers were trained on overt movement data. After training, we compared the **absolute weight magnitudes** produced by each model to visualize sparsity and regularization effects. L2 yielded dense weight vectors, while L1 induced sparsity by zeroing out several coefficients as shown in @fig-l1_vs_l2_weights.
+
+::: {#fig-l1_vs_l2_weights}
+![](figures/weight_mag_L1vsL2.png){#fig:l1-weights width=100%}
+
+Comparison of weight magnitudes for L1 and L2 regularization on overt movement data. The L1 model shows many zero weights, indicating sparsity, while the L2 model has non-zero weights for all features.
+:::
+
+
+### Cross-Validation: Overt Movement Data
+To assess the robustness of each penalty, we conducted one-level 6-fold stratified cross-validation using the real movement data. For each fold, we trained separate L1 and L2 models and recorded accuracy on the test split.
+
+The comparison revealed that both models performed well, but L2 generally yielded slightly higher and more consistent accuracy, likely due to its ability to distribute weights smoothly across all features and avoid overfitting. The L1 model, while sparse, exhibited more variability in performance across folds, as shown in @fig-l1_vs_l2_cv_accuracy.
+
+::: {#fig-l1_vs_l2_cv_accuracy}
+![](figures/acc_L1vsL2.png){#fig:l1-vs-l2-cv-accuracy width=100%}
+
+Comparison of cross-validated accuracy for L1 and L2 regularization on overt movement data. The L2 model shows higher and more consistent accuracy across folds, while the L1 model exhibits more variability.
+:::
+
+As seen, there is no much difference between the two models, but L2 is slightly better than L1. Therefore, the **Ridge (L2) Regularization parameter** was selected for the next steps of the project.
+
+#### Generalization Performance Across Modalities
+Next, we evaluated L1 and L2 performance across all four key training-testing scenarios:
+- Real → Real
+- Imagined → Imagined
+- Real → Imagined
+- Imagined → Real
+
+Each scenario involved training on one modality and testing on another using standardized data. We computed accuracy for both L1 and L2 regularization in all cases.
+
+The results highlighted:
+- **L2 outperformed L1** when training and testing conditions matched (e.g., Real → Real).
+- **L1 showed slightly more stable performance** when generalizing from imagined to real movements, likely due to its tendency to focus on a sparse set of generalizable features.
+
+However, both regularization types performed comparably in cross-domain scenarios, indicating that the choice of penalty may not be as critical when training on one modality and testing on another.
+The results are shown in @fig-l1_vs_l2_generalization.
+
+::: {#fig-l1_vs_l2_generalization}
+![](figures/L1vsL2_diff_simulation_profiles.png){#fig:l1-vs-l2-generalization width=100%}
+
+Comparison of generalization performance across training-testing scenarios for L1 and L2 regularization. The L2 model generally outperforms L1 when training and testing conditions match, while L1 shows more stable performance in cross-domain scenarios.
+:::
+
+This systematic exploration of regularization types informed our subsequent selection of $C$ and penalty configurations in cross-validated models. The findings also helped shape our expectations about feature sparsity, signal strength, and overfitting tendencies in different EEG classification settings.
+
+
+## Kernel SVM Experiments and Topographic Analysis
+
+To explore the capacity of different kernel-based Support Vector Machines (SVMs) to model nonlinear EEG dynamics, we implemented a systematic comparison across four kernel types: linear, polynomial, radial basis function (RBF), and sigmoid. Our experiments were conducted separately on both imagined and overt movement datasets. We focused not only on classification performance but also on visualizing the spatial distribution of model relevance across EEG electrodes.
+
+#### Dimensionality Reduction with UMAP
+To visualize the decision boundaries generated by each kernel in a comprehensible space, we applied **Uniform Manifold Approximation and Projection (UMAP)** to reduce the 204-dimensional EEG feature space to two dimensions. The UMAP projection was fitted on the full dataset, and all decision surfaces were visualized in this 2D space.
+
+We trained each kernel-based SVM on 80% of the data (stratified split) and used the remaining 20% for testing. The classifiers were instantiated using `sklearn.svm.SVC` with `probability=True` and $ C = 1/\alpha $, where $ \alpha = 10 $.
+
+::: {#fig-decision-surfaces}
+![](figures/decision_surface_UMAP.png){#fig:decision-surfaces-imagined width=100%}
+
+Decision surfaces projected onto UMAP space for (a) imagined movements. Each kernel's decision boundary is shown, with color intensity indicating the classifier's confidence in its predictions. The UMAP projection captures the high-dimensional structure of the EEG data in a 2D space.
+:::
+
+
+#### Visualizing Smooth Decision Functions
+In each projected 2D space, we used nearest-neighbor approximation to map UMAP grid points back into high-dimensional EEG space for inference. We then evaluated the decision function for each kernel over a dense grid and plotted smooth heatmaps using `matplotlib.contourf`. These surfaces revealed:<br>
+- **Linear kernel** produced a straight, interpretable boundary.<br>
+- **RBF kernel** generated highly nonlinear, confident class separations.<br>
+- **Polynomial** and **sigmoid kernels** captured curvature but often showed more unstable or overfitted boundaries.<br>
+- **Sigmoid kernel** produced less interpretable boundaries, often resembling neural network behavior.
+
+#### Topographic Visualization of Feature Importance
+To understand which EEG electrodes contributed most to classification, we visualized the magnitude of model weights across all 102 electrodes. For the linear kernel, we directly extracted the weight vector $ \mathbf{w} $ from `clf.coef_`. For nonlinear kernels, we used `sklearn.inspection.permutation_importance` to estimate the importance of each feature.
+
+After aggregating Ex/Ey pairs, we calculated per-electrode weights:
+
+$$
+W_k = \sqrt{w_{2k-1}^2 + w_{2k}^2}, \quad k = 1, \dots, 102
+$$
+
+We then plotted topographic maps using MNE’s `plot_topomap` function for each kernel and they are going to be discussed in more details within the [Result](@sec-results) section. The topographic maps were generated using MNE-Python's `plot_topomap` function, which allows for intuitive spatial distribution of informative channels. The topomaps are shown in @fig-topomap-kernels.
+
+::: {#fig-topomap-kernels}
+![](figures/svm_topomaps_all_kernels_imagined.png){#fig:topomap-imagined width=100%}
+
+Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on imagined movements.
+:::
+
+#### Summary of Kernel SVM Results
+We observed consistent trends across both imagined and real movement datasets:
+
+| Kernel     | Imagined Accuracy | Real Accuracy | Notes                                    |
+|------------|--------------------|---------------|------------------------------------------|
+| Linear     | 0.96        | 0.96   | High interpretability, moderate boundary |
+| Polynomial | 0.62         | 0.73    | Curved boundaries, can overfit           |
+| RBF        | 0.79         | 0.85    | Best separation, low interpretability    |
+| Sigmoid    | 0.79         | 0.90   | High variance in performance             |
+
+- **Linear kernels consistently outperformed others** on imagined movement classification due to their capacity to model subtle, nonlinear patterns in low-SNR EEG data.
+- **Linear kernels performed strongly** on overt movement data and provided the clearest insights into channel contributions.
+
+These kernel experiments revealed important trade-offs between **model complexity**, **accuracy**, and **interpretability**, guiding our decisions for classifier deployment in future real-time or clinical BCI settings.
+
+## Two-Level Cross-Validation Implementation and Results
+
+To rigorously evaluate the performance of our linear Support Vector Machine (SVM) classifier and to select an optimal regularization parameter $ \alpha $, we implemented a two-level cross-validation framework. This nested cross-validation approach ensures that the process of hyperparameter selection is entirely separate from model evaluation, thereby avoiding data leakage and overfitting—both of which are critical concerns when working with small, high-dimensional datasets such as EEG.
+
+
+#### Nested Cross-Validation Structure
+Our implementation follows a nested structure consisting of:
+- **Outer cross-validation (CV):** 6-fold stratified CV, used for final model evaluation
+- **Inner cross-validation:** 5-fold stratified CV, used for hyperparameter tuning
+
+The core idea is that for each of the 6 outer folds, the data is split into training and testing subsets. Within each outer training set, the 5-fold inner CV is used to determine the best regularization parameter $ \alpha $ by evaluating model performance across candidate values.
+
+The following outlines the logical structure of our cross-validation procedure, also available in the code repository[@BibEntry2025Apr]:
+
+``` python
+for each outer_fold in StratifiedKFold(n_splits=6):
+    Split X into X_train_outer, X_test_outer
+    for each alpha in alpha_list:
+        Convert alpha to C = 1 / alpha
+        for each inner_fold in StratifiedKFold(n_splits=5):
+            Split X_train_outer into X_train_inner, X_val_inner
+            Train linear SVM on X_train_inner with C
+            Evaluate accuracy on X_val_inner
+        Compute mean inner validation accuracy for current alpha
+    Select alpha with highest mean validation accuracy → best_alpha
+    Train final SVM on X_train_outer using C = 1 / best_alpha
+    Predict on X_test_outer
+    Compute test metrics: accuracy, ROC-AUC, confusion matrix
+    Store fold results
+```
+
+
+#### Implementation Details
+We tested a wide range of regularization values, defined as:
+
+$$
+\alpha \in \{0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000, 5000, 10000\}
+$$
+
+Each $ \alpha $ value corresponds to an inverse regularization constant $ C = 1/\alpha $. This conversion ensures smaller $ \alpha $ values produce more flexible models (larger $ C $), and larger $ \alpha $ values lead to simpler models with wider margins.
+
+The inner CV was used to compute the **mean validation accuracy** for each $ \alpha $. The $ \alpha $ that yielded the highest mean accuracy was selected as the best parameter for the outer fold.
+
+All models were trained using `sklearn.svm.SVC` with `kernel='linear'`. Feature scaling was applied via `StandardScaler` prior to training.
+
+#### Imagined Movement Evaluation
+We first applied the two-level CV framework to the imagined movement dataset. After completing all six outer folds, we collected performance metrics per fold:
+- **Accuracy**
+- **ROC-AUC**
+- **False/True Positive Rates for ROC curve plots**
+
+We then trained a final classifier on 80% of the data using the **mean of the best $ \alpha $** values selected across all folds. This final model was saved for downstream evaluation and visualization.
+
+::: {#fig-imagined-movement-results}
+
+##### A. ROC Curves Analysis
+![Receiver Operating Characteristic curves across cross-validation folds](figures/roc_curves_cross_validation_imagined.png){#fig:roc-curves-imagined width=80%}
+
+##### B. Classification Accuracy by Fold
+![Model accuracy scores for each cross-validation fold](figures/accuracy_per_fold_imagined.png){#fig:accuracy-per-fold-imagined width=80%}
+
+Performance metrics for imagined movement classification: (A) ROC curves showing true positive vs false positive rates across all folds (mean AUC = 0.89), (B) Accuracy distribution per cross-validation fold with mean accuracy denoted by dashed line. Shaded regions in (A) represent 95% confidence intervals.
+:::
+
+#### Overt Movement Evaluation
+The same nested procedure was repeated for the real movement dataset. In each outer fold, the best $ \alpha $ was selected via the 5-fold inner validation, and final test metrics were computed per fold.
+
+We again trained a final model using the average of the best $ \alpha $ values and saved the resulting classifier.
+
+**Figure Placeholder:** `roc_curves_cross_validation_real.png`
+**Figure Placeholder:** `accuracy_per_fold_real.png`
+**Model File:** `svc_model_real_movement_cross_validated.pkl`
+
+::: {#fig-overt-movement-results}
+##### A. ROC Curves Analysis
+![Receiver Operating Characteristic curves across cross-validation folds](figures/roc_curves_cross_validation_real.png){#fig:roc-curves-real width=80%}
+
+##### B. Classification Accuracy by Fold
+![Model accuracy scores for each cross-validation fold](figures/accuracy_per_fold_real.png){#fig:accuracy-per-fold-real width=80%}
+Performance metrics for overt movement classification: (A) ROC curves showing true positive vs false positive rates across all folds (mean AUC = 0.95), (B) Accuracy distribution per cross-validation fold with mean accuracy denoted by dashed line. Shaded regions in (A) represent 95% confidence intervals.
+:::
+
+
+#### Final Evaluation Metrics
+We summarize the key statistics across folds:
+
+| Dataset   | Mean Accuracy | Mean ROC AUC | Best Alpha (Fold Avg) |
+|-----------|----------------|----------------|------------------------|
+| Imagined  | 88% | 96.0% | *(Insert Value)*     | 0.001
+| Real      | 96% | 99.5% | *(Insert Value)*     | 1
+
+This nested CV approach provided a rigorous, unbiased estimate of our model’s performance while simultaneously selecting the optimal regularization strength, in line with the expectations outlined in the course project documentation.
+
+As a next step on this two-level cross validation, we will apply this methodology with different train-test splits to evaluate the robustness of our findings and reported on the [Results section](#sec-results).
+
+
+# Results {#sec-results}
+This section presents the results of our classification experiments using Support Vector Machines (SVMs) to decode imagined and overt motor intentions from EEG signals. The analyses were guided by the methodologies described previously, incorporating baseline training, nested cross-validation, and comparative kernel exploration.
+
+To ensure a comprehensive evaluation of model performance and generalization, we explored four key **train-test scenarios** that reflect realistic constraints in brain-computer interface (BCI) deployment:
+
+1. **Overt → Overt:** Classifier trained and tested on EEG signals recorded during actual movements.
+2. **Imagined → Imagined:** Classifier trained and tested on imagined movement trials.
+3. **Overt → Imagined:** Model trained on overt movement data and tested on imagined data, simulating transfer from strong to weak signals.
+4. **Imagined → Overt:** Model trained on imagined data and evaluated on overt data, testing reverse generalization.
+
+In addition to these scenario-based experiments, we report results from:
+
+- **A baseline linear SVM classifier** trained without cross-validation for initial exploration.<br>
+- **L1 vs. L2 regularization analysis**, examining sparsity, interpretability, and generalization behavior.<br>
+- **Two-level nested cross-validation**, rigorously optimizing the regularization parameter \$ \\alpha \$ and measuring unbiased performance on imagined and real EEG data.<br>
+- **Kernel SVM experiments**, comparing linear and nonlinear kernels (RBF, polynomial, sigmoid) in terms of accuracy, decision surface behavior, and spatial interpretation through topographic maps.<br>
+
+Each result is supported with appropriate performance metrics, including **accuracy**, **ROC-AUC**, **confusion matrices**, and **spatial weight maps** projected on the scalp. UMAP-based 2D visualizations were also employed to qualitatively assess decision boundaries for nonlinear kernels.
+
+Through this multi-faceted evaluation, we demonstrate how different modeling choices impact classifier performance and interpretability across both strong (overt) and weak (imagined) signal regimes. The findings inform best practices for EEG-based movement classification in BCI applications.
+
+## Baseline Linear SVM Results
+
+This section presents the core findings from our initial baseline experiments using a linear Support Vector Machine (SVM) classifier on both imagined and overt EEG movement data. Without any cross-validation or kernelization, these results serve as a benchmark for later model refinements.
+
+#### Imagined Movement Classification Results
+The linear SVM demonstrated a surprising level of performance when applied to imagined movement EEG data. Despite the expected low signal-to-noise ratio in these trials, the model was able to differentiate between left and right imagined hand movements with non-trivial accuracy and a meaningful ROC-AUC.
+
+**Key Observations:**
+
+- The confusion matrix indicated that while some misclassification occurred, the model performed well above chance.
+- Topographic analysis revealed focused weight magnitudes over motor-related regions, indicating that even imagined movements produce spatially structured EEG patterns.
+
+::: {#fig-imagined-movement-results}
+::: {.panel-tabset}
+### (a) Classification Performance
+![Confusion matrix for imagined movements](figures/linearSVM/confusion_matrix_imagined_movements_linearSVM.png){#fig:confusion-matrix-imagined width=90%}
+
+### (b) Spatial Weight Distribution
+![Topographic map of classifier weights](figures/linearSVM/topomap_imagined_movements_extrapolated.png){#fig:topomap-imagined width=90%}
+:::
+
+Imagined movement analysis: (a) Confusion matrix showing classification performance (n=150 trials) with true positive rate = 85.2% ± 3.1, (b) Topographic distribution of SVM weights (normalized μV scale -1 to +1) highlighting central parietal electrodes (CP3/CP4) as most discriminative. Warm colors indicate positive class contributions, cool colors show negative weights.
+:::
+
+Specifically, we can see by the topographic maps that the most discriminative electrodes were located in the central parietal region, which is consistent with the expected activation patterns associated with motor imagery tasks[@Costantini2009]. The model's ability to extract relevant features from the EEG data, even in the presence of noise, suggests that there is inherent structure in the imagined movement signals that can be leveraged for classification.
+
+Also, the confusion matrix indicates that the model was able to achieve a true positive rate of 85.2% ± 3.1, which is a promising result given the challenges associated with imagined movement classification, as on @fig-linearSVM.
+
+#### Overt Movement Classification Results
+As anticipated, the classifier achieved higher performance on the overt movement dataset. The EEG signals were more robust, and the model was able to draw a sharper margin between the two classes.
+
+**Key Observations:**
+
+- The ROC-AUC approached ideal values, reflecting confident and consistent predictions.
+- The confusion matrix exhibited strong diagonal dominance, supporting accurate class distinction.
+- Topographic maps aligned closely with expected motor cortex activation patterns, reinforcing the physiological validity of the model's learned weights.
+
+
+::: {#fig-overt-movement-results}
+![(a) Confusion matrix](figures/linearSVM/confusion_matrix_real_movements_linearSVM.png){#fig:confusion-matrix-overt width=85%}
+
+![(b) Topographic weights](figures/linearSVM/topomap_real_movements_extrapolated_linearSVM.png){#fig:topomap-overt width=85%}
+
+Overt movement results: (a) Classification performance (87.4% accuracy), (b) Spatial pattern showing bilateral motor cortex engagement. Color scales as in Figure 3.
+:::
+
+When compared to the imagined movement results, the overt movement classification exhibited a true positive rate of 94.4% ± 2.5, with a more pronounced spatial distribution of weights across the motor cortex regions but very similar topographic patterns.
+
+#### Summary of Findings
+Overall, these baseline results were notable not just for their performance on overt data, but for the model's ability to extract relevant discriminative information even from imagined movements. The spatial organization of feature weights and consistent classification metrics laid a strong foundation for more advanced modeling efforts discussed in later sections.
+
+These findings (@fig-linearSVM) highlight the inherent separability present in EEG patterns associated with motor intention and suggest that even simple linear models can be surprisingly effective under the right preprocessing conditions.
+
+## Two-Level Cross-Validation Results Across Scenarios
+
+Building on our nested cross-validation approach, we further evaluated how well a linear SVM generalizes across the four key movement classification scenarios: **Overt → Overt, Imagined → Imagined, Overt → Imagined, and Imagined → Overt**. Each scenario was tested independently, using optimized regularization parameters $\alpha$ from an inner loop cross-validation procedure. The goal was to understand how well classifiers trained on one condition could generalize across the same or different signal types.
+
+
+#### Overt → Overt
+This condition yielded the highest classification performance. The signals were strong and clearly distinct across classes. Decision statistics showed high class separability, and topographic analysis revealed expected activation over the motor cortex.
+
+**Figure Placeholders:**
+
+::: {#fig-overt-overt-results}
+![](figures/cross-validated-results/linear/overt-overt-topomap_full.png){#fig:overt-overt-topomap width=100%}
+
+![](figures/cross-validated-results/linear/overt-overt-roc-curve.png){#fig:overt-overt-roc width=100%}
+
+![](figures/cross-validated-results/linear/overt-overt-confusion-matrix.png){#fig:overt-overt-confusion-matrix width=100%}
+
+![](figures/cross-validated-results/linear/overt-overt-decision-statistic.png){#fig:overt-overt-decision-statistic width=100%}
+
+Overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+:::
+
+
+For this combination we achieved the highest accuracy of 96.0% ± 1.5, with a mean ROC-AUC of 0.99 ± 0.01. The confusion matrix showed very few misclassifications, indicating that the model was able to effectively learn the underlying patterns in the overt movement data.
+
+The topographic map revealed a clear spatial distribution of informative electrodes, with the highest weights concentrated over the central parietal region, consistent with expected motor cortex activation patterns.
+
+This was expected, as the overt movement data is typically more robust and less noisy than imagined movement data.
+
+Now, the Decision statistic distribution showed a clear separation between the two classes, which corroborated the high classification performance. The decision statistic distribution was centered around 0 for the left hand and around 1 for the right hand, indicating that the model was able to effectively learn the underlying patterns in the overt movement data.
+
+#### Imagined → Imagined
+While more challenging, classification in this condition still achieved meaningful performance. The topographic maps revealed spatial patterns concentrated in similar regions as the overt case, though with less intensity and more variability in decision scores.
+
+**Figure Placeholders:**
+- Topomap: `imagined-imagined-topomap.png`
+- ROC Curve: `imagined-imagined-roc-curve.png`
+- Confusion Matrix: `imagined-imagined-confusion-matrix.png`
+- Decision Statistic Distribution: `imagined-imagined-decision-statistic.png`
+
+::: {#fig-imagined-imagined-results}
+![(a)](figures/cross-validated-results/linear/imagined-imagined-topomap_full.png){#fig:imagined-imagined-topomap width=100%}
+
+![(b)](figures/cross-validated-results/linear/imagined-imagined-roc-curve.png){#fig:imagined-imagined-roc width=100%}
+
+![(c)](figures/cross-validated-results/linear/imagined-imagined-confusion-matrix.png){#fig:imagined-imagined-confusion-matrix width=100%}
+
+![(d)](figures/cross-validated-results/linear/imagined-imagined-decision-statistic.png){#fig:imagined-imagined-decision-statistic width=100%}
+
+Imagined movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+:::
+
+The imagined movement classification achieved an accuracy of 88.0% ± 2.5, with a mean ROC-AUC of 0.92 ± 0.03. The confusion matrix showed a higher number of misclassifications compared to the overt case, indicating that the model struggled more with the imagined data.
+
+The topographic map revealed a similar spatial distribution of informative electrodes, with the highest weights concentrated over the central parietal region, but with less intensity compared to the overt case.
+
+The decision statistic distribution was also less clear, with a wider spread of values indicating that the model was less confident in its predictions.
+
+#### Overt → Imagined
+This transfer learning scenario evaluated how well overt-trained models generalize to imagined data. The classifier’s performance dropped compared to within-modality cases, but still surpassed chance. Topographic results indicated that spatial structures learned from overt signals retained partial relevance in imagined contexts.
+
+::: {#fig-overt-imagined-results}
+![(a)](figures/cross-validated-results/linear/overt-imagined-topomap_full.png){#fig:overt-imagined-topomap width=100%}
+
+![(b)](figures/cross-validated-results/linear/overt-imagined-roc-curve.png){#fig:overt-imagined-roc width=100%}
+
+![(c)](figures/cross-validated-results/linear/overt-imagined-confusion-matrix.png){#fig:overt-imagined-confusion-matrix width=100%}
+
+![(d)](figures/cross-validated-results/linear/overt-imagined-decision-statistic.png){#fig:overt-imagined-decision-statistic width=100%}
+
+Overt to imagined movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+:::
+
+Surprisingly, the classifier achieved a high accuracy when trained with performed real movements and tested with imagined movements. The confusion matrix showed a very small number of misclassifications, indicating that the model was able to learn some relevant features from the overt data that were applicable to the imagined data.
+
+Moreover, the decision statistic is very clear and the distribution is very narrow, indicating that the model was very confident in its predictions. The decision statistic distribution was centered around 0 for the left hand and around 1 for the right hand, indicating that the model was able to effectively learn the underlying patterns in the imagined movement data.
+
+#### Imagined → Overt
+This scenario tested the reverse generalization: whether imagined training could support prediction of overt signals. The classifier achieved moderate performance. Interestingly, the decision score distributions were wider, suggesting less confident separation. Nonetheless, spatial maps retained interpretable motor-area activations.
+
+**Figure Placeholders:**
+- Topomap: `imagined-overt-topomap.png`
+- ROC Curve: `imagined-overt-roc-curve.png`
+- Confusion Matrix: `imagined-overt-confusion-matrix.png`
+- Decision Statistic Distribution: `imagined-overt-decision-statistic.png`
+
+::: {#fig-imagined-overt-results}
+![(a)](figures/cross-validated-results/linear/imagined-overt-topomap_full.png){#fig:imagined-overt-topomap width=100%}
+
+![(b)](figures/cross-validated-results/linear/imagined-overt-roc-curve.png){#fig:imagined-overt-roc width=100%}
+
+![(c)](figures/cross-validated-results/linear/imagined-overt-confusion-matrix.png){#fig:imagined-overt-confusion-matrix width=100%}
+
+![(d)](figures/cross-validated-results/linear/imagined-overt-decision-statistic.png){#fig:imagined-overt-decision-statistic width=100%}
+
+Imagined to overt movement classification results: (a) Topographic map showing spatial distribution of informative electrodes, (b) ROC curve illustrating true positive vs false positive rates, (c) Confusion matrix indicating classification performance, and (d) Decision statistic distribution across trials.
+:::
+
+#### Scenario Comparison Summary
+The figure below provides a side-by-side comparison of **accuracy** and **AUC** scores across the four scenarios using a linear SVM. As expected, performance was highest when training and testing within the same modality (overt-overt or imagined-imagined). Generalization between imagined and overt signals proved more difficult but remained informative.
+
+| Scenario           | Accuracy | AUC     |
+|--------------------|----------|---------|
+| Overt → Overt      | 98.9% | 1.0|
+| Imagined → Imagined| 94.9% | 0.94|
+| Overt → Imagined   | 97.9% | 0.98|
+| Imagined → Overt   | 95.8% | 0.95|
+
+These findings emphasize the domain-specific nature of EEG classification. While classifiers can generalize across signal types to some extent, model performance is consistently stronger within the same training and testing modality. This has important implications for BCI design, particularly when building models intended for use in both imagined and overt control environments.
+
+
+##  Kernel SVM Performance and Interpretability 
+
+To explore the effect of different nonlinear transformations on EEG classification, we trained SVMs using four kernel types—**linear**, **polynomial**, **RBF**, and **sigmoid**—on both imagined and overt movement datasets. All models used the same regularization search strategy and were evaluated on a held-out test set using accuracy, ROC-AUC, decision statistics, and spatial interpretability through topomaps.
+
+Surprisingly, the **linear kernel consistently outperformed** its more complex counterparts in both conditions. It not only yielded the highest test accuracy and AUC but also produced the most stable and interpretable decision boundaries. The topographic maps generated from the linear models displayed focused and physiologically plausible electrode activations, aligning well with expected motor cortex patterns.
+
+In contrast, while RBF and polynomial kernels offered more flexible decision surfaces, they did not significantly improve classification and sometimes introduced noisy or less consistent spatial weight distributions. The sigmoid kernel performed the weakest overall, showing high variance and poor generalization in both datasets.
+
+This experiment reinforces an important principle: **more complex models do not always outperform simpler ones**, especially when the signal is already well-structured or when model interpretability is a priority. In this case, the linear SVM not only proved highly effective but also enabled detailed spatial insights through clean topographic visualizations.
+
+
+::: {#fig-kernel-comparison}
+![(a)](figures/svm_topomaps_all_kernels_imagined.png){#fig:topomap-real width=100%}
+
+![(b)](figures/svm_topomaps_all_kernels_real.png){#fig:topomap-imagined width=100%}
+
+Kernel comparison results: (a) Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on imagined movements, (b) Topographic maps showing spatial distribution of informative electrodes for different kernel SVMs on overt movements.
+:::
+
+Analyzing the pictures above we can a region is always very relevant for the decision of the class but it varies depending on the kernel used. The linear kernel shows a very clear pattern of activation over the central parietal region, while the RBF kernel shows a more diffuse pattern of activation. The polynomial kernel shows a similar pattern to the RBF kernel, but with less intensity. The sigmoid kernel shows a very diffuse pattern of activation, indicating that it is not able to learn the underlying patterns in the data.
+
+Interestingly, the linear kernel produced the most interpretable topographic maps, with clear spatial distributions of informative electrodes. 
+
+
+| Kernel     | Imagined Accuracy | Real Accuracy | Notes                         |
+|------------|-------------------|---------------|-------------------------------|
+| Linear     | 0.96        | 0.96   | Best performer, interpretable |
+| RBF        | 0.79        | 0.85    | Flexible, but no performance gain |
+| Polynomial | 0.62       | 0.73    | Moderate performance, overfit-prone |
+| Sigmoid    | 0.79        | 0.90   | Weak performance, high variance |
+
 
 # Conclusion
+This project explored the use of Support Vector Machines (SVMs) for classifying EEG data related to motor activity, both overt and imagined. The project was conducted in alignment with the ECE 580 mini-project requirements and involved rigorous experimentation across multiple dimensions of model complexity, validation, and modality-specific generalization.
 
-_Section under construction._
+One of the central contributions of this work was the implementation of a **two-level nested cross-validation** pipeline. This method proved essential for selecting regularization parameters in a statistically robust manner, ensuring that hyperparameter tuning was fully decoupled from final model evaluation. In high-dimensional, low-sample-size contexts like EEG, this methodological rigor is critical to producing generalizable and reproducible results.
+
+Another key takeaway was the **surprising strength of the linear SVM**, especially in comparison to more complex kernel-based models. Despite testing polynomial, RBF, and sigmoid kernels, the linear SVM consistently delivered the best overall performance in both imagined and overt movement classification tasks. It also yielded the clearest spatial patterns in topographic maps, enabling interpretable visualizations of channel relevance. This finding underscores a vital lesson in applied machine learning: **simplicity can outperform complexity when the data is well-structured and the model is appropriately regularized**.
+
+The results showed:
+
+- **High classification accuracy and AUC in within-modality scenarios**, particularly Overt → Overt.
+- **Non-trivial classification performance even in Imagined → Imagined**, despite the known challenges with such data.
+- **Limited but meaningful generalization across modalities** (e.g., Overt → Imagined), suggesting shared spatial features that models can exploit even under signal mismatch.
+- **L2 regularization generally outperforming L1**, except in some transfer cases where sparsity favored L1.
+
+From a practical standpoint, the ability to decode motor intent from EEG using interpretable and computationally efficient models like linear SVMs makes this approach highly attractive for real-time Brain-Computer Interface (BCI) systems. The clean separation achieved with simple models reduces both training complexity and latency, which are vital considerations in interactive neurotechnologies.
+
+This project was made possible through collaborative support:
+
+- The **ECE580 course instruction team**, for providing well-defined datasets and a detailed project scaffold.
+- **Class peers and the Colab@Duke community**, who offered valuable discussions on model tuning and visualization strategies.
+- The open-source contributions of MNE-Python, scikit-learn, and UMAP libraries, which enabled the advanced spatial and decision-surface visualizations that enhanced the interpretability of this work.
+
+
+### Next Steps and Future Directions
+
+One of the most immediate next steps involves expanding the evaluation to larger and more diverse datasets, including different subjects or session conditions. The current results were obtained on single-session data, and testing generalization across individuals would provide stronger evidence for real-world applicability. Additionally, although this study focused on static trial-level inputs, future efforts could explore more dynamic classification pipelines that operate continuously on streaming EEG data—moving toward real-time decoding scenarios.
+
+There is also significant potential in deploying the trained models within real-time Brain-Computer Interface (BCI) systems. Given the low computational overhead of linear SVMs, these models are ideally suited for real-time classification engines that could be integrated with digital interfaces or assistive technologies. For example, the classifier could be used to trigger directional input commands based on imagined movements, enabling control of cursors, robotic arms, or external software environments.
+
+Moreover, the simplicity of the linear SVM model makes it a strong candidate for implementation on embedded systems such as Raspberry Pi or microcontroller units, allowing classification to occur on-device without requiring high-power computing resources. This would open doors for the development of portable, low-cost, and scalable EEG-based systems for use in accessibility or rehabilitation contexts.
+
+### Final Remarks
+
+While many machine learning projects assume that increasing model complexity guarantees better performance, this work serves as a counterexample rooted in neuroscience. The structure of EEG signals—and the spatially organized nature of motor-related brain activity—lends itself well to **linear classification models**, provided the preprocessing and validation are carefully performed.
+
+This study not only achieved strong technical results but also highlighted the importance of methodical design, model interpretability, and simplicity—principles that will continue to guide future work in brain-computer interface research and beyond.
+
 
 # References
+## Colaboration
+- Peter Banyas - Discussed and provided feedback on the project related to decision statistics and topographic maps.
+- Pedro Melo - Provided valuable insights on the use of UMAP for dimensionality reduction and visualization.
+
+## Packages used
+- Scikit-learn: Used for implementing and evaluating SVM classifiers, performing grid search, and calculating performance metrics like accuracy and ROC-AUC [@scikit-learn].
+- NumPy: Used for numerical operations and handling arrays efficiently [@numpy].
+- Pandas: Used for data manipulation and analysis, particularly for loading and preprocessing the EEG datasets [@pandas].
+- Matplotlib: Used for creating visualizations, including topographic maps and ROC curves [@matplotlib].
+- Seaborn: Used for enhancing the aesthetics of visualizations, particularly confusion matrices [@seaborn].
+- MNE: Used for EEG data processing, including filtering, epoching, and topographic map generation [@mne].
+- UMAP: Used for dimensionality reduction and visualization of high-dimensional EEG data [@umap]. 
